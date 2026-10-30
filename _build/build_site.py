@@ -235,6 +235,21 @@ DOCBOX = f'''<aside class="card docbox">
 </aside>'''
 
 # ---------------- article pages ----------------
+# 主題相近的文章互相連結（避免搜尋時互搶，也讓讀者一次看完整個主題）
+CLUSTERS = [
+    ['S02-21', 'S02-25', 'S02-04', 'S02-13', 'S02-24', 'S02-29', 'S02-22'],
+    ['S02-09', 'S02-27', 'S02-32', 'S02-30', 'S02-31'],
+    ['S04-38', 'S04-04', 'S04-32', 'S04-33', 'S04-27', 'S04-34', 'S04-22'],
+    ['S04-03', 'S04-39', 'S04-43', 'S04-42'],
+    ['S04-14', 'S04-21', 'S04-30', 'S04-31', 'S04-23', 'S06-21'],
+    ['S05-21', 'S05-26', 'S05-33', 'S05-28'],
+    ['S05-04', 'S05-24', 'S05-27', 'S05-38'],
+    ['S05-11', 'S05-25', 'S05-22', 'S05-34', 'S05-35', 'S05-36'],
+    ['S02-33', 'S02-34', 'S02-35', 'S02-28', 'S02-36'],
+    ['S01-06', 'S04-29', 'S01-24', 'S01-22'],
+    ['S04-26', 'S05-29', 'S05-30', 'S05-05'],
+    ['S02-05', 'S02-26', 'S02-08', 'S02-06', 'S06-07'],
+]
 all_topics = []
 for th in themes:
     for t in th['topics']:
@@ -271,7 +286,12 @@ for th in themes:
         prev_t = tops[i - 1] if i > 0 else None
         next_t = tops[i + 1] if i + 1 < len(tops) else None
         pn = '<nav class="pn" aria-label="上下篇">' + (f'<a href="/a/{prev_t["id"]}"><small>← 上一篇</small>{e(prev_t["title"])}</a>' if prev_t else '<span></span>') + (f'<a class="nx" href="/a/{next_t["id"]}"><small>下一篇 →</small>{e(next_t["title"])}</a>' if next_t else '<span></span>') + '</nav>'
-        related = [x for x in tops if x['id'] != tid][max(0, i - 2):max(0, i - 2) + 4]
+        cl = [c for c in CLUSTERS if tid in c]
+        cl_ids = [x for x in (cl[0] if cl else []) if x != tid]
+        topic_by = {x['id']: x for _, x in all_topics}
+        related = [topic_by[x] for x in cl_ids if x in topic_by]
+        related += [x for x in tops if x['id'] != tid and x['id'] not in cl_ids][max(0, i - 2):max(0, i - 2) + max(0, 4 - len(related))]
+        related = related[:6]
         rel_html = '<ul class="alist">' + ''.join(f'<li><a class="arow" href="/a/{x["id"]}"><div class="t">{e(x["title"])}</div><div class="s">{e(x["subtitle"])}</div></a></li>' for x in related) + '</ul>'
         checks = checklist_for(t)
         check_html = ''.join(f'<label><input type="checkbox" value="{e(c)}"><span>{e(c)}</span></label>' for c in checks)
@@ -319,7 +339,7 @@ for th in themes:
 </section>
 {DOCBOX}
 {pn}
-<h2 style="font-size:19px;margin:8px 0 12px">同系列延伸閱讀</h2>
+<h2 style="font-size:19px;margin:8px 0 12px">{'同主題延伸閱讀' if cl_ids else '同系列延伸閱讀'}</h2>
 {rel_html}
 </article>'''
         page = shell(f'{t["title"]}｜梁雅淳醫師婦兒中醫衛教', desc, path, body, active='topics', head_extra=ld, og_image=card_src, og_type='article')
