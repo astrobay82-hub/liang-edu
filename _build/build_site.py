@@ -221,6 +221,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 <footer class="site"><div class="wrap">
   <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">雅淳醫師成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
   <p>本網站內容為一般衛教資訊，不能取代醫師面對面診察。孩子精神活動力明顯變差、呼吸困難、意識改變或持續高燒等情況，請立即就醫。</p>
+  <p>相關網站：<a href="https://chen.ialdsm.com/" target="_blank" rel="noopener">陳相如中醫師｜中醫傷科・運動照護</a>　<a href="https://ialdsm.com/" target="_blank" rel="noopener">國際全齡發展與運動醫學協會</a></p>
   <p>© 梁雅淳醫師｜台中慈濟醫院中醫部中醫兒科　內容更新：{UPDATED}</p>
 </div></footer>
 <nav class="bnav" aria-label="快速選單">{bnav}</nav>
@@ -458,6 +459,11 @@ dr_body = f'''<div class="wrap">
   <a class="lk" href="{LINE_DR}" target="_blank" rel="noopener"><span class="ic" style="background:#06C755">LINE</span><span><b>雅淳醫師官方 LINE</b><small>掛號連結、最新文章與門診公告</small></span></a>
   <a class="lk" href="{LINE_BOT}" target="_blank" rel="noopener"><span class="ic" style="background:#06C755">AI</span><span><b>LINE 衛教小幫手</b><small>查詢本專欄衛教內容</small></span></a>
   <a class="lk" href="https://taichung.tzuchi.com.tw/index.php/dan-wei-jie-shao/2023-08-01-07-33-11/liang-ya-chun-yi-shi" target="_blank" rel="noopener"><span class="ic" style="background:#3A6356">院</span><span><b>台中慈濟醫院・醫師介紹頁</b><small>醫院官網</small></span></a>
+</div>
+<div class="sec-title"><h2>相關網站</h2></div>
+<div class="links">
+  <a class="lk" href="https://chen.ialdsm.com/" target="_blank" rel="noopener"><span class="ic" style="background:#3F5E7A">陳</span><span><b>陳相如中醫師｜中醫傷科・運動照護</b><small>台中慈濟醫院中醫部傷科門診、動作解碼與水墨衛教影音</small></span></a>
+  <a class="lk" href="https://ialdsm.com/" target="_blank" rel="noopener"><span class="ic" style="background:#8a6d3b">協</span><span><b>國際全齡發展與運動醫學協會</b><small>全齡發展與運動醫學的推廣與交流</small></span></a>
 </div>
 <div class="sec-title"><h2>大愛電視《大愛學漢醫》節目</h2><a href="https://www.youtube.com/results?search_query=%E6%A2%81%E9%9B%85%E6%B7%B3+%E5%A4%A7%E6%84%9B%E5%AD%B8%E6%BC%A2%E9%86%AB" target="_blank" rel="noopener">在 YouTube 看更多 →</a></div>
 <div class="vids">{vid_html}</div>
