@@ -297,3 +297,7 @@ footer.site .cols{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
 .bp-promo b{font-family:var(--serif);font-size:17px}
 .bp-promo p{margin:2px 0 0;font-size:14px;color:var(--muted);line-height:1.5}
 @media print{.bp-bar,.bp-tabs,.bp-stage,.bp-dom .bp-seg,.bp-box .row,.bp-form,[data-act]{display:none!important}}
+.sys .ic.ic-img{background:#fff;border:1px solid var(--line);width:52px;height:52px;border-radius:14px;padding:4px}
+.sys .ic.ic-img svg{width:100%;height:100%;display:block}
+.sys.on .ic.ic-img{border-color:var(--green)}
+@media (max-width:699px){.sys .ic.ic-img{width:46px;height:46px;padding:3px}}

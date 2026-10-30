@@ -4,6 +4,7 @@ import json, re, os, html, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from refs import refs_for
 from checklists import checklist_for
+from sys_icons import ICONS as SYS_ICONS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -363,7 +364,7 @@ json.dump(card_jobs, open(os.path.join(HERE, 'card_jobs.json'), 'w'), ensure_asc
 # ---------------- home ----------------
 th_index = [{'id': th['id'], 'name': th['name']} for th in themes]
 first = th_index[0]['id']
-sys_btns = ''.join(f'<button class="sys" type="button" data-sys="{th["id"]}" aria-pressed="false"><span class="ic {SYS_COLOR.get(th["color"], "c-emerald")}">{e(th["name"][0])}</span><span><b>{e(th["name"])}</b><small>{len(th["topics"])} 篇<i>・{e(th["subtitle"])}</i></small></span></button>' for th in themes)
+sys_btns = ''.join(f'<button class="sys" type="button" data-sys="{th["id"]}" aria-pressed="false"><span class="ic ic-img">{SYS_ICONS.get(th["id"], "")}</span><span><b>{e(th["name"])}</b><small>{len(th["topics"])} 篇<i>・{e(th["subtitle"])}</i></small></span></button>' for th in themes)
 # no-JS fallback list (also good for crawlers)
 noscript = ''.join(f'<h3>{e(th["name"])}</h3><ul>' + ''.join(f'<li><a href="/a/{t["id"]}">{e(t["title"])}</a></li>' for t in th['topics']) + '</ul>' for th in themes)
 idx_json = json.dumps({'themes': th_index, 'topics': flat_index}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
