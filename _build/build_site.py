@@ -26,6 +26,7 @@ import hashlib
 def _ver(name):
     return hashlib.md5(open(os.path.join(OUT, 'assets', name), 'rb').read()).hexdigest()[:8]
 V_CSS, V_JS, V_BP = _ver('site.css'), _ver('site.js'), _ver('blueprint.js')
+V_AV = _ver('avatar.webp')
 
 # ---------------- content cleanup ----------------
 META_CUT = re.compile(r'\s*(#+\s*)?(這一題最值得留下|醫療內容定位|診間一句話收尾|家長最好記的一句話|醫師一句話|診間價值標註|這題我會標成|把核心記憶點|這一篇的醫療邏輯|這題也可以和|這題的核心數字)')
@@ -200,15 +201,15 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 <meta property="og:locale" content="zh_TW">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#3A6356">
-<link rel="icon" type="image/png" href="/assets/favicon-64.png">
-<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/assets/favicon-64.png?v={V_AV}">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png?v={V_AV}">
 <link rel="stylesheet" href="/assets/site.css?v={V_CSS}">
 {head_extra}
 </head>
 <body>
 <a class="sr" href="#main">跳到主要內容</a>
 <header class="topbar"><div class="in">
-  <a class="brand" href="/" aria-label="回首頁"><img src="/assets/avatar.webp" width="40" height="40" alt=""><span><b>梁雅淳醫師</b><small>婦兒中醫衛教專欄</small></span></a>
+  <a class="brand" href="/" aria-label="回首頁"><img src="/assets/avatar.webp?v={V_AV}" width="40" height="40" alt=""><span><b>梁雅淳醫師</b><small>婦兒中醫衛教專欄</small></span></a>
   <nav class="topnav" aria-label="主選單">{topnav}</nav>
   <a class="icon-btn" href="/#search" aria-label="搜尋文章">{ICON['search']}</a>
   <a class="line-btn" href="{LINE_BOT}" target="_blank" rel="noopener">LINE 問小幫手</a>
@@ -237,7 +238,7 @@ DR_PERSON = {'@type': 'Physician', 'name': '梁雅淳', 'jobTitle': '中醫兒�
              'medicalSpecialty': 'Pediatric', 'sameAs': ['https://www.facebook.com/dr.lyc/', 'https://www.instagram.com/kids_health_tcm', 'https://www.threads.com/@kids_health_tcm']}
 
 DOCBOX = f'''<aside class="card docbox">
-  <img src="/assets/avatar.webp" width="64" height="64" alt="梁雅淳醫師Q版頭像" loading="lazy">
+  <img src="/assets/avatar.webp?v={V_AV}" width="64" height="64" alt="梁雅淳醫師Q版頭像" loading="lazy">
   <div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫部中醫兒科主任｜藥師＋中醫師雙專業</p>
   <div class="row"><a class="btn pri" href="{REG}" target="_blank" rel="noopener">網路掛號</a><a class="btn" href="/doctor">門診時間</a><a class="btn" href="{LINE_DR}" target="_blank" rel="noopener">官方 LINE</a></div></div>
 </aside>'''
@@ -376,7 +377,7 @@ home_body = f'''<div class="wrap">
   <p class="lead"><b>孩子不舒服的時候，先在這裡找到方向。</b>整理國際兒科指引與研究重點，加上中醫兒科的臨床觀點：今晚在家能做什麼、什麼情況要就醫，一篇看懂。</p>
   <div class="search" id="search"><label class="sr" for="q">搜尋衛教文章</label>{ICON['search']}<input id="q" type="search" placeholder="輸入症狀，例如：鼻塞、便秘、長高" autocomplete="off" enterkeyhint="search"></div>
   <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button></div>
-  <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
+  <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp?v={V_AV}" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
   <a class="card bp-promo" href="/growth"><span class="ic">🌱</span><div><b>雅淳醫師成長手帳（免費試用）</b><p>依孩子年齡看發展觀察重點、記錄生活與身高體重，回診前一鍵整理摘要。</p></div></a>
 </section>
 <section id="saved" hidden><div class="sec-title"><h2>我的收藏</h2></div><ul class="alist" id="saved-list"></ul></section>
@@ -430,7 +431,7 @@ for sl, lab in (('早', '上午<br><small>9:00–12:00</small>'), ('午', '下�
 dr_ld = jsonld({'@context': 'https://schema.org', **DR_PERSON, 'description': '台中慈濟醫院中醫部中醫兒科主任，藥師與中醫師雙專業，專長過敏免疫調節、小兒脊椎側彎與骨架調整、性早熟與青春期成長調養。'})
 dr_body = f'''<div class="wrap">
 <section class="dr-hero">
-  <div class="dr-photo"><img src="/assets/dr-liang.webp" width="400" height="654" alt="梁雅淳醫師" fetchpriority="high"><img class="q" src="/assets/avatar.webp" width="72" height="72" alt="梁雅淳醫師Q版頭像"></div>
+  <div class="dr-photo"><img src="/assets/dr-liang.webp" width="400" height="654" alt="梁雅淳醫師" fetchpriority="high"><img class="q" src="/assets/avatar.webp?v={V_AV}" width="72" height="72" alt="梁雅淳醫師Q版頭像"></div>
   <div>
     <p class="eyebrow">醫師介紹</p>
     <h1>梁雅淳醫師｜台中慈濟醫院中醫兒科</h1>
