@@ -301,3 +301,19 @@ footer.site .cols{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
 .sys .ic.ic-img svg{width:100%;height:100%;display:block}
 .sys.on .ic.ic-img{border-color:var(--green)}
 @media (max-width:699px){.sys .ic.ic-img{width:46px;height:46px;padding:3px}}
+
+/* ---------- 主題標籤與 QR ---------- */
+.tagrow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.tag{font-size:14px;padding:5px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--green-d)}
+.tag:hover{border-color:var(--green);background:var(--green-l);text-decoration:none}
+.qrbox{display:flex;gap:16px;align-items:center;padding:16px;margin:8px 0}
+.qrbox .qr{display:block;border-radius:8px}
+.qrbox b{font-family:var(--serif);font-size:17px}
+.qrbox p{margin:4px 0 10px;font-size:14px;color:var(--muted);line-height:1.6}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin:12px 0}
+.qcard{display:flex;gap:12px;align-items:center;background:#fff;border:1.5px dashed #c9c2b4;border-radius:14px;padding:12px;break-inside:avoid}
+.qcard b{display:block;font-family:var(--serif);font-size:18px;color:var(--green-d)}
+.qcard small{display:block;color:var(--muted);font-size:13px}
+.qcard span{display:block;font-size:11px;color:var(--muted);margin-top:6px;word-break:break-all}
+.qfoot{text-align:center;color:var(--muted);font-size:12px}
+@media print{.qrsheet .qgrid{grid-template-columns:1fr 1fr;gap:6mm}.qcard{border-color:#999}main{padding:0}.wrap{max-width:none}}

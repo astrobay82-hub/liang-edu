@@ -5,6 +5,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from refs import refs_for
 from checklists import checklist_for
 from sys_icons import ICONS as SYS_ICONS
+from topics import TOPICS, SLUG_NAME, topics_for, qr_svg
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -324,6 +325,7 @@ for th in themes:
 <h1>{e(t['title'])}</h1>
 <p class="sub">{e(t['subtitle'])}</p>
 <div class="meta"><span class="chip">{e(th['name'])}</span><span class="chip gray">適用 {e(t['age'])}</span><span class="chip gray">約 {read_min(t)} 分鐘</span></div>
+<div class="tagrow">{''.join(f'<a class="tag" href="/t/{s}">#{e(SLUG_NAME[s])}</a>' for s in topics_for(t))}</div>
 <div class="actions">
   <button class="btn" type="button" data-save="{tid}">{ICON['bookmark']}<span>收藏</span></button>
   <button class="btn" type="button" data-share="{SITE}{path}">{ICON['share']}<span>分享</span></button>
@@ -384,6 +386,7 @@ home_body = f'''<div class="wrap">
 </section>
 <section id="saved" hidden><div class="sec-title"><h2>我的收藏</h2></div><ul class="alist" id="saved-list"></ul></section>
 <section id="topics"><div class="sec-title"><h2>依身體系統瀏覽</h2></div><div class="systems">{sys_btns}</div></section>
+<section><div class="sec-title"><h2>熱門主題</h2></div><div class="tagrow">{''.join(f'<a class="tag" href="/t/{s}">#{e(n)}</a>' for s, n, _, _ in TOPICS)}</div></section>
 <section><div class="listhead" id="listhead"><h2 id="listhead-title">文章</h2><span class="count" id="listhead-count"></span></div>
 <ul class="alist" id="alist"><li class="empty">載入中…</li></ul>
 <noscript>{noscript}</noscript></section>
@@ -483,6 +486,36 @@ gr_body = f'''<div class="wrap">
 <script src="/assets/blueprint.js?v={V_BP}" defer></script>'''
 open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('兒童發展觀察與成長紀錄工具 - 雅淳醫師成長手帳', '孩子幾個月該會什麼？依年齡看發展觀察重點與在家互動點子，記錄身高體重與生活變化，回診前一鍵整理摘要。免費使用，立即開始記錄。', '/growth', gr_body, active='growth'))
 
+# ---------------- topic pages & QR cards ----------------
+os.makedirs(os.path.join(OUT, 't'), exist_ok=True)
+topic_members = {s: [] for s, _, _, _ in TOPICS}
+for th0, t0 in all_topics:
+    for s0 in topics_for(t0):
+        topic_members[s0].append(t0)
+for slug, name, _, tdesc in TOPICS:
+    mem = topic_members[slug]
+    url = f'{SITE}/t/{slug}'
+    items = ''.join(f'<li><a class="arow" href="/a/{x["id"]}"><div class="t">{e(x["title"])}</div><div class="s">{e(x["subtitle"])}</div></a></li>' for x in mem)
+    others = ''.join(f'<a class="tag" href="/t/{s2}">#{e(n2)}</a>' for s2, n2, _, _ in TOPICS if s2 != slug)
+    body = f'''<div class="narrow">
+<nav class="crumb" aria-label="導覽路徑"><a href="/">首頁</a>›<span>主題</span></nav>
+<section class="hero" style="padding-top:8px"><p class="eyebrow">主題整理・{len(mem)} 篇</p><h1>{e(name)}：家長衛教文章整理</h1><p class="lead">{e(tdesc)}</p></section>
+<div class="card qrbox"><div>{qr_svg(url, 132)}</div><div><b>門診帶回家看</b><p>用手機掃描，就能隨時打開這個主題的所有文章。可以截圖存起來，或分享給家人。</p><button class="btn" type="button" data-share="{url}">分享這個主題</button></div></div>
+<ul class="alist" style="margin-top:16px">{items}</ul>
+<div class="sec-title"><h2>其他主題</h2></div><div class="tagrow">{others}</div>
+{DOCBOX}
+</div>'''
+    ld = jsonld({'@context': 'https://schema.org', '@type': 'CollectionPage', 'name': f'{name}衛教文章', 'url': url,
+                 'hasPart': [{'@type': 'MedicalWebPage', 'name': x['title'], 'url': f'{SITE}/a/{x["id"]}'} for x in mem]})
+    open(os.path.join(OUT, 't', f'{slug}.html'), 'w', encoding='utf-8').write(
+        shell(f'{name}衛教文章整理（{len(mem)}篇） - 梁雅淳醫師', f'{tdesc}梁雅淳醫師整理 {len(mem)} 篇{name}相關衛教，掃描或點開就能看。', f'/t/{slug}', body, active='topics', head_extra=ld))
+# printable QR sheet for the clinic (not indexed)
+qcards = ''.join(f'''<div class="qcard">{qr_svg(f"{SITE}/t/{slug}", 120)}<div><b>{e(name)}</b><small>{len(topic_members[slug])} 篇衛教文章</small><span>liang.ialdsm.com/t/{slug}</span></div></div>''' for slug, name, _, _ in TOPICS)
+qcards += f'''<div class="qcard">{qr_svg(f"{SITE}/growth", 120)}<div><b>雅淳醫師成長手帳</b><small>兒童發展觀察與成長紀錄（免費）</small><span>liang.ialdsm.com/growth</span></div></div>'''
+qbody = f'''<div class="wrap qrsheet"><section class="hero noprint"><p class="eyebrow">門診用</p><h1>主題 QR 卡列印頁</h1><p class="lead">每個主題一張 QR 卡，門診時給家長掃描，回家就能看同類文章。按「列印」用 A4 印出後裁切，或截圖傳給家長。</p><button class="btn pri" type="button" data-print>列印 QR 卡</button></section>
+<div class="qgrid">{qcards}</div><p class="qfoot">梁雅淳醫師｜台中慈濟醫院中醫兒科　婦兒中醫衛教專欄 liang.ialdsm.com</p></div>'''
+open(os.path.join(OUT, 'qr.html'), 'w', encoding='utf-8').write(shell('主題 QR 卡列印頁 - 梁雅淳醫師', '門診用主題 QR 卡。', '/qr', qbody, head_extra='<meta name="robots" content="noindex">'))
+
 # ---------------- redirects for merged articles ----------------
 _rd = json.load(open(os.path.join(HERE, 'merged_redirects.json')))
 open(os.path.join(OUT, '_redirects'), 'w').write(''.join(f'/a/{a} /a/{b} 301\n/a/{a}.html /a/{b} 301\n' for a, b in _rd.items()))
@@ -493,7 +526,7 @@ for a in _rd:
 
 # ---------------- 404, sitemap, robots ----------------
 open(os.path.join(OUT, '404.html'), 'w', encoding='utf-8').write(shell('找不到頁面｜梁雅淳醫師婦兒中醫衛教', '找不到這個頁面。', '/404', '<div class="narrow"><section class="hero"><h1>找不到這個頁面</h1><p class="lead">網址可能已更新。可以回首頁用搜尋找文章。</p><a class="btn pri" href="/">回首頁</a></section></div>'))
-urls = [('/', '1.0'), ('/doctor', '0.8'), ('/growth', '0.8'), ('/notes', '0.7')] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
+urls = [('/', '1.0'), ('/doctor', '0.8'), ('/growth', '0.8'), ('/notes', '0.7')] + [(f'/t/{s}', '0.7') for s, _, _, _ in TOPICS] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{p}</priority></url>\n' for u, p in urls) + '</urlset>\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
 print('pages', len(flat_index), 'notes', len(notes))
