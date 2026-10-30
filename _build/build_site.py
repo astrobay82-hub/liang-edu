@@ -22,6 +22,10 @@ for _th in themes:
             _s['body'] = _s['body'].replace('這反而是這題最值得家長注意的地方', '這反而是最值得家長注意的地方')
 notes = json.load(open(os.path.join(HERE, 'notes50.json')))
 e = lambda s: html.escape(str(s), quote=True)
+import hashlib
+def _ver(name):
+    return hashlib.md5(open(os.path.join(OUT, 'assets', name), 'rb').read()).hexdigest()[:8]
+V_CSS, V_JS, V_BP = _ver('site.css'), _ver('site.js'), _ver('blueprint.js')
 
 # ---------------- content cleanup ----------------
 META_CUT = re.compile(r'\s*(#+\s*)?(這一題最值得留下|醫療內容定位|診間一句話收尾|家長最好記的一句話|醫師一句話|診間價值標註|這題我會標成|把核心記憶點|這一篇的醫療邏輯|這題也可以和|這題的核心數字)')
@@ -194,7 +198,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v={UPDATED}">
+<link rel="stylesheet" href="/assets/site.css?v={V_CSS}">
 {head_extra}
 </head>
 <body>
@@ -214,7 +218,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
   <p>© 梁雅淳醫師｜台中慈濟醫院中醫部中醫兒科　內容更新：{UPDATED}</p>
 </div></footer>
 <nav class="bnav" aria-label="快速選單">{bnav}</nav>
-<script src="/assets/site.js?v={UPDATED}" defer></script>
+<script src="/assets/site.js?v={V_JS}" defer></script>
 </body>
 </html>
 '''
@@ -462,7 +466,7 @@ gr_body = f'''<div class="wrap">
 <div id="bp-app"><noscript><p class="empty">這個工具需要開啟 JavaScript。</p></noscript></div>
 </div>
 <script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
-<script src="/assets/blueprint.js?v={UPDATED}" defer></script>'''
+<script src="/assets/blueprint.js?v={V_BP}" defer></script>'''
 open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('雅淳醫師成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
 
 # ---------------- redirects for merged articles ----------------
