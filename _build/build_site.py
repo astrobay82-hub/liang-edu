@@ -318,6 +318,7 @@ for th in themes:
   <button class="btn" type="button" data-print>{ICON['print']}<span>列印</span></button>
 </div>
 <p class="focus"><small>醫師叮嚀</small>{e(t['focus'])}</p>
+{('<p class="note" style="margin:-6px 0 18px">' + e(t['notice']) + '</p>') if t.get('notice') else ''}
 <nav class="toc" aria-label="本文段落"><a href="#quick">重點速讀</a><a href="#detail">詳細衛教</a><a href="#tcm">中醫觀點</a><a href="#flag">何時就醫</a><a href="#card">衛教圖卡</a><a href="#refs">參考資料</a></nav>
 <section class="block" id="quick"><h2><span class="tag">3 分鐘</span>重點速讀</h2><div class="prose">{prose(t['ext_reading_500'])}</div></section>
 <section class="block" id="detail"><h2><span class="tag">深入</span>詳細衛教</h2>{secs}</section>
