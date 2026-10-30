@@ -131,7 +131,7 @@
     mood: ['情緒／精力', { steady: '大致平穩', irritable: '較容易煩躁', low: '精力較低', high: '活動量較高', sensitive: '對變化較敏感' }],
     body: ['體感／出汗', { usual: '與平常差不多', cold: '較怕冷', warm: '較怕熱', sweaty: '較容易出汗', nightsweat: '睡覺流很多汗' }]
   };
-  var LOG_LINKS = { appetite: ['S02-05', 'S02-08', 'S06-07'], sleep: ['S04-01', 'S04-02', 'S04-42'], bowel_hard: ['S02-21', 'S02-04', 'S02-25'], bowel_loose: ['S02-03', 'S02-20'], mood: ['S04-04', 'S04-03', 'S04-27'], body: ['S04-12', 'S06-17'] };
+  var LOG_LINKS = { appetite: ['S02-05', 'S02-08', 'S06-07'], sleep: ['S04-01', 'S04-02', 'S04-42'], bowel_hard: ['S02-21', 'S02-04', 'S02-21'], bowel_loose: ['S02-03', 'S02-20'], mood: ['S04-04', 'S04-03', 'S04-27'], body: ['S04-12', 'S06-17'] };
   var PROMPTS = { appetite: '食慾或用餐改變與時段、活動、點心或用餐環境有無關聯？', sleep: '睡眠變化多在什麼時段或情境？作息、午睡或睡前安排有無不同？', bowel: '排便變化與飲水、飲食或如廁習慣有何關聯？孩子有沒有不舒服？', mood: '情緒或精力變化通常發生在什麼情境？什麼支持有幫助？', body: '冷熱感受或出汗和活動量、室溫或身體不適有無關聯？' };
 
   function links(ids, label) {

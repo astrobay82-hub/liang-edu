@@ -237,17 +237,17 @@ DOCBOX = f'''<aside class="card docbox">
 # ---------------- article pages ----------------
 # 主題相近的文章互相連結（避免搜尋時互搶，也讓讀者一次看完整個主題）
 CLUSTERS = [
-    ['S02-21', 'S02-25', 'S02-04', 'S02-13', 'S02-24', 'S02-29', 'S02-22'],
-    ['S02-09', 'S02-27', 'S02-32', 'S02-30', 'S02-31'],
-    ['S04-38', 'S04-04', 'S04-32', 'S04-33', 'S04-27', 'S04-34', 'S04-22'],
-    ['S04-03', 'S04-39', 'S04-43', 'S04-42'],
-    ['S04-14', 'S04-21', 'S04-30', 'S04-31', 'S04-23', 'S06-21'],
-    ['S05-21', 'S05-26', 'S05-33', 'S05-28'],
-    ['S05-04', 'S05-24', 'S05-27', 'S05-38'],
+    ['S02-21', 'S02-04', 'S02-13', 'S02-24', 'S02-29', 'S02-22'],
+    ['S02-09', 'S02-32', 'S02-30', 'S02-31'],
+    ['S04-04', 'S04-33', 'S04-27', 'S04-34', 'S04-22'],
+    ['S04-03', 'S04-42'],
+    ['S04-14', 'S04-31', 'S04-23', 'S06-21'],
+    ['S05-21', 'S05-33', 'S05-28'],
+    ['S05-04', 'S05-27', 'S05-38'],
     ['S05-11', 'S05-25', 'S05-22', 'S05-34', 'S05-35', 'S05-36'],
-    ['S02-33', 'S02-34', 'S02-35', 'S02-28', 'S02-36'],
+    ['S02-33', 'S02-34', 'S02-28', 'S02-36'],
     ['S01-06', 'S04-29', 'S01-24', 'S01-22'],
-    ['S04-26', 'S05-29', 'S05-30', 'S05-05'],
+    ['S04-26', 'S05-30', 'S05-05'],
     ['S02-05', 'S02-26', 'S02-08', 'S02-06', 'S06-07'],
 ]
 all_topics = []
@@ -463,6 +463,14 @@ gr_body = f'''<div class="wrap">
 <script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
 <script src="/assets/blueprint.js?v={UPDATED}" defer></script>'''
 open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('雅淳醫師成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
+
+# ---------------- redirects for merged articles ----------------
+_rd = json.load(open(os.path.join(HERE, 'merged_redirects.json')))
+open(os.path.join(OUT, '_redirects'), 'w').write(''.join(f'/a/{a} /a/{b} 301\n/a/{a}.html /a/{b} 301\n' for a, b in _rd.items()))
+for a in _rd:
+    for f in (os.path.join(OUT, 'a', a + '.html'), os.path.join(OUT, 'cards', a + '.jpg')):
+        if os.path.exists(f):
+            os.remove(f)
 
 # ---------------- 404, sitemap, robots ----------------
 open(os.path.join(OUT, '404.html'), 'w', encoding='utf-8').write(shell('找不到頁面｜梁雅淳醫師婦兒中醫衛教', '找不到這個頁面。', '/404', '<div class="narrow"><section class="hero"><h1>找不到這個頁面</h1><p class="lead">網址可能已更新。可以回首頁用搜尋找文章。</p><a class="btn pri" href="/">回首頁</a></section></div>'))
