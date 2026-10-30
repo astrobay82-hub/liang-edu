@@ -1,7 +1,7 @@
 :root{
   --bg:#F7F4EE;--paper:#FFFFFF;--ink:#232926;--ink2:#3D4641;--muted:#6E7671;--line:#E8E3DA;--soft:#F4F1EA;
   --green:#3A6356;--green-d:#2B4C41;--green-l:#EEF3F0;--red:#C86D51;--red-d:#8C3F27;--red-l:#FDF6F3;--gold:#B8862F;
-  --serif:"Noto Serif TC","Noto Serif CJK TC",serif;--sans:"Noto Sans TC","Noto Sans CJK TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC","STSong","PMingLiU",serif;--sans:"Noto Sans TC","Noto Sans CJK TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
   --r:16px;--shadow:0 1px 2px rgba(35,41,38,.04),0 4px 16px rgba(35,41,38,.05);
 }
 *{box-sizing:border-box}
@@ -168,7 +168,7 @@ mark{background:#FBEFC9;color:inherit;border-radius:3px;padding:0 1px}
 .dr-photo{position:relative;border-radius:22px;overflow:hidden;background:#284276;max-width:300px;margin:0 auto;box-shadow:var(--shadow)}
 .dr-photo img{display:block;width:100%}
 .dr-photo .q{position:absolute;right:10px;bottom:10px;width:72px;height:72px;border-radius:50%;border:3px solid #fff;background:#f3e6e6}
-.dr-hero h1{font-size:30px}
+.dr-hero h1{font-size:26px}
 .dr-hero .title{color:var(--green-d);font-weight:600;margin:6px 0 10px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 16px}
 .grid2{display:grid;gap:14px}

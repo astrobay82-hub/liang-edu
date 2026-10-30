@@ -146,9 +146,15 @@ def first_sents(s, n=90):
     return out[:n + 30]
 
 
+CTA = '中醫師整理在家照護重點與就醫時機，點開看完整說明。'
+
+
 def desc_of(t):
-    d = t['subtitle'] if len(t['subtitle']) > 20 else first_sents(t['ext_reading_500'], 80)
-    return re.sub(r'\s+', ' ', d)[:150]
+    d = t['subtitle'] if len(t['subtitle']) > 12 else first_sents(t['ext_reading_500'], 60)
+    d = re.sub(r'\s+', ' ', d).strip(' 。')
+    if len(d) > 62:
+        d = d[:62].rstrip('，、：；') + '…'
+    return d + '。' + CTA
 
 
 def read_min(t):
@@ -196,8 +202,6 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 <meta name="theme-color" content="#3A6356">
 <link rel="icon" type="image/png" href="/assets/favicon-64.png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css?v={V_CSS}">
 {head_extra}
 </head>
@@ -239,6 +243,7 @@ DOCBOX = f'''<aside class="card docbox">
 </aside>'''
 
 # ---------------- article pages ----------------
+SEO_T = json.load(open(os.path.join(HERE, 'seo_titles.json')))
 # 主題相近的文章互相連結（避免搜尋時互搶，也讓讀者一次看完整個主題）
 CLUSTERS = [
     ['S02-21', 'S02-04', 'S02-13', 'S02-24', 'S02-29', 'S02-22'],
@@ -279,6 +284,7 @@ for th in themes:
             if os.path.exists(os.path.join(nlm_dir, f'{tid}.{ext}')):
                 nlm = f'/cards/nlm/{tid}.{ext}'
         card_src = nlm or f'/cards/{tid}.jpg'
+        card_view = nlm or (f'/cards/{tid}.webp' if os.path.exists(os.path.join(OUT, 'cards', f'{tid}.webp')) else card_src)
         card_jobs.append({'id': tid, 'title': t['title'], 'focus': t['focus'], 'flags': flat_items, 'flag_raw': ' '.join(fparas),
                           'tcm': first_sents(t['tcm_view'], 110), 'sys': th['name'], 'color': th['color']})
 
@@ -329,7 +335,7 @@ for th in themes:
 <section class="block" id="tcm"><h2><span class="tag">中醫</span>中醫怎麼看</h2><div class="tcm"><dl><dt>相關臟腑</dt><dd>{e(t['tcm_organ'])}</dd><dt>常見證型</dt><dd>{e(t['pattern'])}</dd></dl><div class="prose">{prose(t['tcm_view'])}</div></div></section>
 <section class="block" id="flag"><div class="flag"><h2>何時應該就醫評估？</h2>{flag_html}<p class="er">若出現呼吸困難、意識不清、抽搐不止、持續高燒或精神活動力明顯變差，請直接就醫或撥打 119。</p></div></section>
 <section class="block infocard" id="card"><h2><span class="tag">可存圖</span>衛教圖卡</h2>
-  <img src="{card_src}" width="1080" height="1350" alt="{e(t['title'])}衛教圖卡" loading="lazy">
+  <img src="{card_view}" width="1080" height="1350" alt="{e(t['title'])}衛教圖卡" loading="lazy">
   <div class="row"><a class="btn pri" href="{card_src}" download="{tid}-{e(t['title'][:16])}.jpg">{ICON['image']}<span>下載圖卡</span></a><a class="btn" href="https://social-plugins.line.me/lineit/share?url={SITE}{path}" target="_blank" rel="noopener">分享到 LINE</a></div>
 </section>
 <section class="block noprint"><h2><span class="tag">看診用</span>看診前 30 秒小抄</h2>
@@ -347,7 +353,7 @@ for th in themes:
 <h2 style="font-size:19px;margin:8px 0 12px">{'同主題延伸閱讀' if cl_ids else '同系列延伸閱讀'}</h2>
 {rel_html}
 </article>'''
-        page = shell(f'{t["title"]}｜梁雅淳醫師婦兒中醫衛教', desc, path, body, active='topics', head_extra=ld, og_image=card_src, og_type='article')
+        page = shell(f'{SEO_T.get(tid, t["title"])} - 梁雅淳醫師', desc, path, body, active='topics', head_extra=ld, og_image=card_src, og_type='article')
         open(os.path.join(OUT, 'a', f'{tid}.html'), 'w', encoding='utf-8').write(page)
         flat_index.append({'id': tid, 'title': t['title'], 'subtitle': t['subtitle'], 'age': t['age'], 'tag': t['tag'], 'kw': t['pattern'] + ' ' + t['tcm_organ']})
 
@@ -366,8 +372,8 @@ home_ld = jsonld({'@context': 'https://schema.org', '@type': 'WebSite', 'name': 
 home_body = f'''<div class="wrap">
 <section class="hero">
   <p class="eyebrow">婦兒中醫衛教專欄・{total} 篇</p>
-  <h1>孩子不舒服的時候，<br>先在這裡找到方向</h1>
-  <p class="lead">整理國際兒科指引與研究重點，加上中醫兒科的臨床觀點：今晚在家能做什麼、什麼情況要就醫，一篇看懂。</p>
+  <h1>台中中醫兒科衛教：孩子過敏、腸胃、睡眠與長高照護</h1>
+  <p class="lead"><b>孩子不舒服的時候，先在這裡找到方向。</b>整理國際兒科指引與研究重點，加上中醫兒科的臨床觀點：今晚在家能做什麼、什麼情況要就醫，一篇看懂。</p>
   <div class="search" id="search"><label class="sr" for="q">搜尋衛教文章</label>{ICON['search']}<input id="q" type="search" placeholder="輸入症狀，例如：鼻塞、便秘、長高" autocomplete="off" enterkeyhint="search"></div>
   <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button></div>
   <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
@@ -383,7 +389,7 @@ home_body = f'''<div class="wrap">
 </div>
 <script type="application/json" id="topic-index">{idx_json}</script>'''
 open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8').write(
-    shell('梁雅淳醫師｜婦兒中醫衛教專欄－兒童過敏、生長、腸胃、睡眠居家照護', f'台中慈濟醫院中醫兒科主任梁雅淳醫師的衛教專欄：{total} 篇兒童與婦女常見問題，整合國際指引與中醫觀點，告訴家長在家怎麼做、何時該就醫。', '/', home_body, active='home', head_extra=home_ld))
+    shell('台中中醫兒科衛教｜兒童過敏長高腸胃照護 - 梁雅淳醫師', f'孩子鼻過敏、咳嗽、便秘、睡不好、長不高怎麼辦？台中慈濟中醫兒科主任梁雅淳醫師整理 {total} 篇國際指引與中醫觀點的居家照護重點，立即搜尋你的問題。', '/', home_body, active='home', head_extra=home_ld))
 
 # ---------------- notes ----------------
 cats = []
@@ -393,9 +399,9 @@ for n in notes:
 pills = '<button class="on" type="button" data-cat="ALL">全部（50）</button>' + ''.join(f'<button type="button" data-cat="{e(c)}">{e(c)}</button>' for c in cats)
 nlist = ''.join(f'''<article class="card nt" data-cat="{e(n['category'])}" id="{n['id']}"><span class="chip">{e(n['category'])}</span><h3>{e(n['title'])}</h3>
 <div class="lab">診間場景</div><p>{e(n['scene'])}</p><div class="lab">醫師觀察</div><p>{e(n['insight'])}</p><p class="take"><b>帶回家的一句話：</b>{e(n['takeaway'])}</p></article>''' for n in notes)
-notes_body = f'''<div class="narrow"><section class="hero"><p class="eyebrow">看診手記・50 篇</p><h1>診間裡常被問的那些事</h1><p class="lead">從真實看診情境整理出來的觀察筆記，一則一個重點。</p></section>
+notes_body = f'''<div class="narrow"><section class="hero"><p class="eyebrow">看診手記・50 篇</p><h1>中醫兒科看診手記：診間裡常被問的那些事</h1><p class="lead">從真實看診情境整理出來的觀察筆記，一則一個重點。</p></section>
 <div class="pills" id="note-pills" role="toolbar" aria-label="分類">{pills}</div><div class="notes">{nlist}</div></div>'''
-open(os.path.join(OUT, 'notes.html'), 'w', encoding='utf-8').write(shell('看診手記 50 篇｜梁雅淳醫師婦兒中醫衛教', '梁雅淳醫師整理的 50 則看診手記：發燒、咳嗽、鼻塞、睡眠、情緒與生長的診間觀察與居家重點。', '/notes', notes_body, active='notes'))
+open(os.path.join(OUT, 'notes.html'), 'w', encoding='utf-8').write(shell('中醫兒科看診手記50篇 - 梁雅淳醫師', '發燒手腳冰冷、半夜鼻塞、孩子越累越亢奮？梁雅淳醫師整理 50 則診間真實觀察，一則一個居家照護重點，點開看看你家是否也遇過。', '/notes', notes_body, active='notes'))
 
 # ---------------- doctor ----------------
 VIDS = [
@@ -414,7 +420,7 @@ NEWS = [
     ('中醫傷科結合西醫復健 臺中慈濟醫院推展運動醫學', 'https://taichung.tzuchi.com.tw/index.php/xun-xi-zhuan-qu/xin-wen-bao-dao/geng-duo-xin-wen-bao-dao/geng-duo-xin-wen-bao-dao-70/2023-06-05-08-18-18', '台中慈濟醫院新聞稿'),
     ('社區推廣中醫八段錦 改善長輩常見症狀', 'https://taichung.tzuchi.com.tw/index.php/xun-xi-zhuan-qu/xin-wen-bao-dao/geng-duo-xin-wen-bao-dao/geng-duo-xin-wen-bao-dao-70/she-qu-tui-guang-zhong-yi-ba-duan-jin-gai-shan-zhang-bei-chang-jian-zheng-zhuang', '台中慈濟醫院新聞稿'),
 ]
-vid_html = ''.join(f'<a class="vid" href="https://www.youtube.com/watch?v={v}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><div>{e(t)}<small>大愛學漢醫・{d}</small></div></a>' for v, t, d in VIDS)
+vid_html = ''.join(f'<a class="vid" href="https://www.youtube.com/watch?v={v}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi_webp/{v}/hqdefault.webp" alt="" loading="lazy" width="480" height="270"><div>{e(t)}<small>大愛學漢醫・{d}</small></div></a>' for v, t, d in VIDS)
 news_html = ''.join(f'<a class="lk" href="{u}" target="_blank" rel="noopener"><span class="ic" style="background:#8a6d3b">新聞</span><span><b>{e(t)}</b><small>{s}</small></span></a>' for t, u, s in NEWS)
 H = {('一', '早'): ('228診', '第一院區'), ('三', '早'): ('178診', '第二院區'), ('六', '早'): ('178診', '第二院區'),
      ('四', '午'): ('228診', '第一院區'), ('二', '晚'): ('178診', '第二院區'), ('五', '晚'): ('178診', '第二院區')}
@@ -424,10 +430,10 @@ for sl, lab in (('早', '上午<br><small>9:00–12:00</small>'), ('午', '下�
 dr_ld = jsonld({'@context': 'https://schema.org', **DR_PERSON, 'description': '台中慈濟醫院中醫部中醫兒科主任，藥師與中醫師雙專業，專長過敏免疫調節、小兒脊椎側彎與骨架調整、性早熟與青春期成長調養。'})
 dr_body = f'''<div class="wrap">
 <section class="dr-hero">
-  <div class="dr-photo"><img src="/assets/dr-liang.webp" width="400" height="654" alt="梁雅淳醫師"><img class="q" src="/assets/avatar.webp" width="72" height="72" alt="梁雅淳醫師Q版頭像"></div>
+  <div class="dr-photo"><img src="/assets/dr-liang.webp" width="400" height="654" alt="梁雅淳醫師" fetchpriority="high"><img class="q" src="/assets/avatar.webp" width="72" height="72" alt="梁雅淳醫師Q版頭像"></div>
   <div>
     <p class="eyebrow">醫師介紹</p>
-    <h1>梁雅淳 醫師</h1>
+    <h1>梁雅淳醫師｜台中慈濟醫院中醫兒科</h1>
     <p class="title">台中慈濟醫院 中醫部 中醫兒科主任／主治醫師</p>
     <p class="prose" style="margin:0">藥師與中醫師雙專業，擅長中西醫整合治療、婦兒結構治療與內科調理。看診時重視把「為什麼會這樣」說清楚，讓家長回家知道怎麼照顧、什麼時候要回診。</p>
     <div class="tags"><span class="chip">過敏及免疫調節</span><span class="chip">小兒脊椎側彎・骨架調整</span><span class="chip">小兒運動傷害</span><span class="chip">性早熟</span><span class="chip">青春期成長調養・體重管理</span><span class="chip">兒童青少年皮膚調理</span><span class="chip">睡眠障礙</span><span class="chip">頭暈頭痛</span></div>
@@ -456,18 +462,18 @@ dr_body = f'''<div class="wrap">
 <div class="sec-title"><h2>新聞報導</h2></div>
 <div class="links">{news_html}</div>
 </div>'''
-open(os.path.join(OUT, 'doctor.html'), 'w', encoding='utf-8').write(shell('梁雅淳醫師介紹・門診時間｜台中慈濟醫院中醫兒科', '梁雅淳醫師，台中慈濟醫院中醫兒科主任，藥師與中醫師雙專業。專長過敏免疫調節、小兒脊椎側彎、性早熟與青春期成長調養。門診時間、掛號、大愛學漢醫節目與新聞報導。', '/doctor', dr_body, active='doctor', head_extra=dr_ld, og_image='/assets/dr-liang.webp', og_type='profile'))
+open(os.path.join(OUT, 'doctor.html'), 'w', encoding='utf-8').write(shell('台中慈濟中醫兒科主任 門診時間與掛號 - 梁雅淳醫師', '想找台中中醫兒科？梁雅淳醫師專長兒童過敏、脊椎側彎、性早熟與青春期長高調理。查看最新門診時間，線上掛號或加入官方 LINE 諮詢。', '/doctor', dr_body, active='doctor', head_extra=dr_ld, og_image='/assets/dr-liang.webp', og_type='profile'))
 
 # ---------------- growth tool ----------------
 art_titles = {x['id']: x['title'] for x in flat_index}
 gr_body = f'''<div class="wrap">
-<section class="hero" style="padding-bottom:4px"><p class="eyebrow">免費試用版・資料只存在你的裝置</p><h1>雅淳醫師成長手帳</h1>
+<section class="hero" style="padding-bottom:4px"><p class="eyebrow">免費試用版・資料只存在你的裝置</p><h1>雅淳醫師成長手帳：兒童發展觀察與成長紀錄</h1>
 <p class="lead">梁雅淳醫師為家長設計的成長觀察工具：依孩子年齡看「觀察什麼、在家怎麼陪」，記下生活與身高體重，回診前一鍵整理成摘要。不是測驗，也不是診斷。</p></section>
 <div id="bp-app"><noscript><p class="empty">這個工具需要開啟 JavaScript。</p></noscript></div>
 </div>
 <script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
 <script src="/assets/blueprint.js?v={V_BP}" defer></script>'''
-open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('雅淳醫師成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
+open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('兒童發展觀察與成長紀錄工具 - 雅淳醫師成長手帳', '孩子幾個月該會什麼？依年齡看發展觀察重點與在家互動點子，記錄身高體重與生活變化，回診前一鍵整理摘要。免費使用，立即開始記錄。', '/growth', gr_body, active='growth'))
 
 # ---------------- redirects for merged articles ----------------
 _rd = json.load(open(os.path.join(HERE, 'merged_redirects.json')))
