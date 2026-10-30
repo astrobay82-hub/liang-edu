@@ -1,0 +1,10 @@
+{
+  // Cloudflare Workers 靜態網站設定（部署命令：npx wrangler deploy）
+  "name": "liang-edu-github",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

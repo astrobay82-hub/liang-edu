@@ -3,6 +3,7 @@
 import json, re, os, html, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from refs import refs_for
+from checklists import checklist_for
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -271,7 +272,7 @@ for th in themes:
         pn = '<nav class="pn" aria-label="上下篇">' + (f'<a href="/a/{prev_t["id"]}"><small>← 上一篇</small>{e(prev_t["title"])}</a>' if prev_t else '<span></span>') + (f'<a class="nx" href="/a/{next_t["id"]}"><small>下一篇 →</small>{e(next_t["title"])}</a>' if next_t else '<span></span>') + '</nav>'
         related = [x for x in tops if x['id'] != tid][max(0, i - 2):max(0, i - 2) + 4]
         rel_html = '<ul class="alist">' + ''.join(f'<li><a class="arow" href="/a/{x["id"]}"><div class="t">{e(x["title"])}</div><div class="s">{e(x["subtitle"])}</div></a></li>' for x in related) + '</ul>'
-        checks = ['症狀從什麼時候開始、白天和晚上哪個時段比較明顯', '最近的睡眠、食慾、喝水量與大小便狀況', '已經用過的西藥、中藥、保健品或外用藥（含劑量）', '家中最近的環境變化（換季、搬家、入學、作息改變）', '這次最擔心、最想請醫師確認的一件事']
+        checks = checklist_for(t)
         check_html = ''.join(f'<label><input type="checkbox" value="{e(c)}"><span>{e(c)}</span></label>' for c in checks)
         desc = desc_of(t)
         ld = jsonld({'@context': 'https://schema.org', '@graph': [
