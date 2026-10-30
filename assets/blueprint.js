@@ -1,4 +1,4 @@
-/* 善淳成長手帳｜梁雅淳醫師的兒童成長觀察工具（免費試用版）
+/* 雅淳醫師成長手帳｜梁雅淳醫師的兒童成長觀察工具（免費試用版）
    資料只存在這台裝置的這個瀏覽器（localStorage），不上傳。 */
 (function () {
   'use strict';
@@ -379,7 +379,7 @@
     on('[data-act=school]', function () { var sk = $('[data-act=school]').getAttribute('data-stage'); if (!val('sc-note')) { toast('請寫下看到的情況'); return; } c.school.push({ id: uid(), stage: sk, date: val('sc-date') || today(), topic: val('sc-topic'), note: val('sc-note') }); save(); render(); toast('已儲存'); });
     on('[data-act=copy]', function () { var t = $('#bp-summary'); t.select(); var txt = t.value; if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(function () { toast('已複製，可貼到備忘錄'); }); else { try { document.execCommand('copy'); toast('已複製'); } catch (e) { toast('請長按選取複製'); } } });
     on('[data-act=print]', function () { window.print(); });
-    on('[data-act=export]', function () { var blob = new Blob([JSON.stringify({ app: 'shanchun-growth', version: 1, exported: today(), data: state }, null, 2)], { type: 'application/json' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '善淳成長手帳備份-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000); toast('備份檔已下載'); });
+    on('[data-act=export]', function () { var blob = new Blob([JSON.stringify({ app: 'liang-growth', version: 1, exported: today(), data: state }, null, 2)], { type: 'application/json' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = '成長手帳備份-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000); toast('備份檔已下載'); });
     var imp = $('#bp-import'); if (imp) imp.onchange = function () { var f = imp.files[0]; if (!f) return; var r = new FileReader(); r.onload = function () { try { var j = JSON.parse(r.result); var d = j.data || j; if (!Array.isArray(d.children)) throw 0; if (!confirm('匯入會取代目前的紀錄，確定嗎？')) return; state = d; save(); render(); toast('已匯入'); } catch (e) { toast('檔案格式不正確'); } }; r.readAsText(f); };
     var dels = { dellog: 'logs', delgr: 'growth', delpub: 'puberty', delschool: 'school' };
     Object.keys(dels).forEach(function (k) { $$('[data-' + k + ']').forEach(function (b) { b.onclick = function () { var id = b.getAttribute('data-' + k); c[dels[k]] = c[dels[k]].filter(function (x) { return x.id !== id; }); save(); render(); }; }); });

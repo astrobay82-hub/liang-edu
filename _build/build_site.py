@@ -209,7 +209,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 {body}
 </main>
 <footer class="site"><div class="wrap">
-  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">善淳成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
+  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">雅淳醫師成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
   <p>本網站內容為一般衛教資訊，不能取代醫師面對面診察。孩子精神活動力明顯變差、呼吸困難、意識改變或持續高燒等情況，請立即就醫。</p>
   <p>© 梁雅淳醫師｜台中慈濟醫院中醫部中醫兒科　內容更新：{UPDATED}</p>
 </div></footer>
@@ -346,7 +346,7 @@ home_body = f'''<div class="wrap">
   <div class="search" id="search"><label class="sr" for="q">搜尋衛教文章</label>{ICON['search']}<input id="q" type="search" placeholder="輸入症狀，例如：鼻塞、便秘、長高" autocomplete="off" enterkeyhint="search"></div>
   <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button></div>
   <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
-  <a class="card bp-promo" href="/growth"><span class="ic">🌱</span><div><b>善淳成長手帳（免費試用）</b><p>依孩子年齡看發展觀察重點、記錄生活與身高體重，回診前一鍵整理摘要。</p></div></a>
+  <a class="card bp-promo" href="/growth"><span class="ic">🌱</span><div><b>雅淳醫師成長手帳（免費試用）</b><p>依孩子年齡看發展觀察重點、記錄生活與身高體重，回診前一鍵整理摘要。</p></div></a>
 </section>
 <section id="saved" hidden><div class="sec-title"><h2>我的收藏</h2></div><ul class="alist" id="saved-list"></ul></section>
 <section id="topics"><div class="sec-title"><h2>依身體系統瀏覽</h2></div><div class="systems">{sys_btns}</div></section>
@@ -436,13 +436,13 @@ open(os.path.join(OUT, 'doctor.html'), 'w', encoding='utf-8').write(shell('梁�
 # ---------------- growth tool ----------------
 art_titles = {x['id']: x['title'] for x in flat_index}
 gr_body = f'''<div class="wrap">
-<section class="hero" style="padding-bottom:4px"><p class="eyebrow">免費試用版・資料只存在你的裝置</p><h1>善淳成長手帳</h1>
+<section class="hero" style="padding-bottom:4px"><p class="eyebrow">免費試用版・資料只存在你的裝置</p><h1>雅淳醫師成長手帳</h1>
 <p class="lead">梁雅淳醫師為家長設計的成長觀察工具：依孩子年齡看「觀察什麼、在家怎麼陪」，記下生活與身高體重，回診前一鍵整理成摘要。不是測驗，也不是診斷。</p></section>
 <div id="bp-app"><noscript><p class="empty">這個工具需要開啟 JavaScript。</p></noscript></div>
 </div>
 <script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
 <script src="/assets/blueprint.js?v={UPDATED}" defer></script>'''
-open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('善淳成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
+open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('雅淳醫師成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
 
 # ---------------- 404, sitemap, robots ----------------
 open(os.path.join(OUT, '404.html'), 'w', encoding='utf-8').write(shell('找不到頁面｜梁雅淳醫師婦兒中醫衛教', '找不到這個頁面。', '/404', '<div class="narrow"><section class="hero"><h1>找不到這個頁面</h1><p class="lead">網址可能已更新。可以回首頁用搜尋找文章。</p><a class="btn pri" href="/">回首頁</a></section></div>'))
