@@ -159,6 +159,7 @@ ICON = {
     'grid': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>',
     'note': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 3h10l4 4v14H5z"/><path d="M9 11h6M9 15h6"/></svg>',
     'user': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+    'sprout': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 7 8.5 4.5 4 4.5 4 9 7 12 12 12z"/><path d="M12 14c0-4 3-6.5 8-6.5 0 4-3 6.5-8 6.5z"/></svg>',
     'bookmark': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
     'share': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>',
     'print': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M7 14h10v7H7z"/></svg>',
@@ -168,9 +169,9 @@ ICON = {
 
 def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/og-default.jpg', og_type='website'):
     canon = SITE + path
-    nav = [('/', '首頁', 'home'), ('/#topics', '文章分類', 'topics'), ('/notes', '看診手記', 'notes'), ('/doctor', '醫師介紹', 'doctor')]
+    nav = [('/', '首頁', 'home'), ('/#topics', '文章分類', 'topics'), ('/growth', '成長手帳', 'growth'), ('/notes', '看診手記', 'notes'), ('/doctor', '醫師介紹', 'doctor')]
     topnav = ''.join(f'<a href="{h}"{" class=on" if k == active else ""}>{n}</a>' for h, n, k in nav)
-    bn = [('/', '首頁', 'home', 'home'), ('/#topics', '分類', 'grid', 'topics'), ('/#search', '搜尋', 'search', 'search'), ('/notes', '手記', 'note', 'notes'), ('/doctor', '醫師', 'user', 'doctor')]
+    bn = [('/', '首頁', 'home', 'home'), ('/#topics', '分類', 'grid', 'topics'), ('/growth', '成長手帳', 'sprout', 'growth'), ('/notes', '手記', 'note', 'notes'), ('/doctor', '醫師', 'user', 'doctor')]
     bnav = ''.join(f'<a href="{h}"{" class=on" if k == active else ""}>{ICON[i]}<span>{n}</span></a>' for h, n, i, k in bn)
     return f'''<!doctype html>
 <html lang="zh-Hant-TW">
@@ -208,7 +209,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 {body}
 </main>
 <footer class="site"><div class="wrap">
-  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
+  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">善淳成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
   <p>本網站內容為一般衛教資訊，不能取代醫師面對面診察。孩子精神活動力明顯變差、呼吸困難、意識改變或持續高燒等情況，請立即就醫。</p>
   <p>© 梁雅淳醫師｜台中慈濟醫院中醫部中醫兒科　內容更新：{UPDATED}</p>
 </div></footer>
@@ -345,6 +346,7 @@ home_body = f'''<div class="wrap">
   <div class="search" id="search"><label class="sr" for="q">搜尋衛教文章</label>{ICON['search']}<input id="q" type="search" placeholder="輸入症狀，例如：鼻塞、便秘、長高" autocomplete="off" enterkeyhint="search"></div>
   <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button></div>
   <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
+  <a class="card bp-promo" href="/growth"><span class="ic">🌱</span><div><b>善淳成長手帳（免費試用）</b><p>依孩子年齡看發展觀察重點、記錄生活與身高體重，回診前一鍵整理摘要。</p></div></a>
 </section>
 <section id="saved" hidden><div class="sec-title"><h2>我的收藏</h2></div><ul class="alist" id="saved-list"></ul></section>
 <section id="topics"><div class="sec-title"><h2>依身體系統瀏覽</h2></div><div class="systems">{sys_btns}</div></section>
@@ -431,9 +433,20 @@ dr_body = f'''<div class="wrap">
 </div>'''
 open(os.path.join(OUT, 'doctor.html'), 'w', encoding='utf-8').write(shell('梁雅淳醫師介紹・門診時間｜台中慈濟醫院中醫兒科', '梁雅淳醫師，台中慈濟醫院中醫兒科主任，藥師與中醫師雙專業。專長過敏免疫調節、小兒脊椎側彎、性早熟與青春期成長調養。門診時間、掛號、大愛學漢醫節目與新聞報導。', '/doctor', dr_body, active='doctor', head_extra=dr_ld, og_image='/assets/dr-liang.webp', og_type='profile'))
 
+# ---------------- growth tool ----------------
+art_titles = {x['id']: x['title'] for x in flat_index}
+gr_body = f'''<div class="wrap">
+<section class="hero" style="padding-bottom:4px"><p class="eyebrow">免費試用版・資料只存在你的裝置</p><h1>善淳成長手帳</h1>
+<p class="lead">梁雅淳醫師為家長設計的成長觀察工具：依孩子年齡看「觀察什麼、在家怎麼陪」，記下生活與身高體重，回診前一鍵整理成摘要。不是測驗，也不是診斷。</p></section>
+<div id="bp-app"><noscript><p class="empty">這個工具需要開啟 JavaScript。</p></noscript></div>
+</div>
+<script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
+<script src="/assets/blueprint.js?v={UPDATED}" defer></script>'''
+open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('善淳成長手帳｜梁雅淳醫師的兒童成長觀察工具', '依孩子年齡整理發展觀察重點與在家互動點子，記錄生活、身高體重與青春期變化，回診前一鍵整理摘要。免費試用，資料只存在你的裝置。', '/growth', gr_body, active='growth'))
+
 # ---------------- 404, sitemap, robots ----------------
 open(os.path.join(OUT, '404.html'), 'w', encoding='utf-8').write(shell('找不到頁面｜梁雅淳醫師婦兒中醫衛教', '找不到這個頁面。', '/404', '<div class="narrow"><section class="hero"><h1>找不到這個頁面</h1><p class="lead">網址可能已更新。可以回首頁用搜尋找文章。</p><a class="btn pri" href="/">回首頁</a></section></div>'))
-urls = [('/', '1.0'), ('/doctor', '0.8'), ('/notes', '0.7')] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
+urls = [('/', '1.0'), ('/doctor', '0.8'), ('/growth', '0.8'), ('/notes', '0.7')] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{p}</priority></url>\n' for u, p in urls) + '</urlset>\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
 print('pages', len(flat_index), 'notes', len(notes))
