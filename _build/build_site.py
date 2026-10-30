@@ -419,7 +419,7 @@ dr_body = f'''<div class="wrap">
 </div>
 <div class="sec-title"><h2>追蹤雅淳醫師</h2></div>
 <div class="links">
-  <a class="lk" href="https://www.facebook.com/dr.lyc/" target="_blank" rel="noopener"><span class="ic" style="background:#1877F2">FB</span><span><b>中醫善淳－梁雅淳醫師</b><small>Facebook 粉絲專頁</small></span></a>
+  <a class="lk" href="https://www.facebook.com/dr.lyc/" target="_blank" rel="noopener"><span class="ic" style="background:#1877F2">FB</span><span><b>雅淳醫師</b><small>Facebook 粉絲專頁</small></span></a>
   <a class="lk" href="https://www.threads.com/@kids_health_tcm" target="_blank" rel="noopener"><span class="ic" style="background:#111">@</span><span><b>@kids_health_tcm</b><small>Threads・每天的育兒共感短文</small></span></a>
   <a class="lk" href="https://www.instagram.com/kids_health_tcm" target="_blank" rel="noopener"><span class="ic" style="background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)">IG</span><span><b>kids_health_tcm</b><small>Instagram</small></span></a>
   <a class="lk" href="{LINE_DR}" target="_blank" rel="noopener"><span class="ic" style="background:#06C755">LINE</span><span><b>雅淳醫師官方 LINE</b><small>掛號連結、最新文章與門診公告</small></span></a>
