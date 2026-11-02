@@ -29,6 +29,7 @@ def _ver(name):
     return hashlib.md5(open(os.path.join(OUT, 'assets', name), 'rb').read()).hexdigest()[:8]
 V_CSS, V_JS, V_BP = _ver('site.css'), _ver('site.js'), _ver('blueprint.js')
 V_AV = _ver('avatar.webp')
+V_GC = _ver('growth-curve.js')
 
 # ---------------- content cleanup ----------------
 META_CUT = re.compile(r'\s*(#+\s*)?(這一題最值得留下|醫療內容定位|診間一句話收尾|家長最好記的一句話|醫師一句話|診間價值標註|這題我會標成|把核心記憶點|這一篇的醫療邏輯|這題也可以和|這題的核心數字)')
@@ -483,7 +484,8 @@ gr_body = f'''<div class="wrap">
 <div id="bp-app"><noscript><p class="empty">這個工具需要開啟 JavaScript。</p></noscript></div>
 </div>
 <script type="application/json" id="bp-articles">{json.dumps(art_titles, ensure_ascii=False)}</script>
-<script src="/assets/blueprint.js?v={V_BP}" defer></script>'''
+<script src="/assets/blueprint.js?v={V_BP}" defer></script>
+<script src="/assets/growth-curve.js?v={V_GC}" defer></script>'''
 open(os.path.join(OUT, 'growth.html'), 'w', encoding='utf-8').write(shell('兒童發展觀察與成長紀錄工具 - 雅淳醫師成長手帳', '孩子幾個月該會什麼？依年齡看發展觀察重點與在家互動點子，記錄身高體重與生活變化，回診前一鍵整理摘要。免費使用，立即開始記錄。', '/growth', gr_body, active='growth'))
 
 # ---------------- topic pages & QR cards ----------------
