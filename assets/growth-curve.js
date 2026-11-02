@@ -66,12 +66,30 @@
   function readState() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
   function readX() { try { return JSON.parse(localStorage.getItem(XKEY) || '{}') || {}; } catch (e) { return {}; } }
   function writeX(x) { try { localStorage.setItem(XKEY, JSON.stringify(x)); return true; } catch (e) { return false; } }
+  /* 優先寫進手帳本身的孩子資料（會跟著備份檔走）；舊版手帳沒有 bpAPI 時才退回外掛自己的儲存 */
+  function setField(id, key, val) {
+    if (window.bpAPI && window.bpAPI.update) { var o = {}; o[key] = val; if (window.bpAPI.update(id, o)) return; }
+    var x = readX(); x[id] = x[id] || {}; x[id][key] = val; writeX(x);
+  }
+  /* 把舊版另存的性別與父母身高搬進手帳資料 */
+  function migrate() {
+    if (!(window.bpAPI && window.bpAPI.update)) return;
+    var x = readX(), st = readState(), moved = false;
+    if (!st || !Array.isArray(st.children)) return;
+    st.children.forEach(function (c) {
+      var ex = x[c.id]; if (!ex) return;
+      var f = {};
+      ['sex', 'fh', 'mh'].forEach(function (k) { if (ex[k] && !c[k]) f[k] = ex[k]; });
+      if (Object.keys(f).length && window.bpAPI.update(c.id, f)) { delete x[c.id]; moved = true; }
+    });
+    if (moved) writeX(x);
+  }
   function currentChild() {
     var st = readState(); if (!st || !Array.isArray(st.children) || !st.children.length) return null;
     var sel = document.getElementById('bp-child'), id = sel ? sel.value : st.active;
     var c = st.children.filter(function (x) { return x.id === id; })[0] || st.children[0];
     var ex = readX()[c.id] || {};
-    return { id: c.id, name: c.name, birth: c.birthday, sex: ex.sex || null, fh: ex.fh || null, mh: ex.mh || null,
+    return { id: c.id, name: c.name, birth: c.birthday, sex: c.sex || ex.sex || null, fh: c.fh || ex.fh || null, mh: c.mh || ex.mh || null,
       recs: (c.growth || []).filter(function (g) { return g && g.date && (g.h || g.w); }).slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }),
       puberty: (c.puberty || []).slice() };
   }
@@ -175,12 +193,12 @@
     '<li><b>提醒的意思：</b>這裡的提醒是「建議和醫師討論」的時機，不是診斷，也不能取代醫師診察與骨齡、抽血等檢查。</li></ul></details>';
 
   function growthPanel(k) {
-    var x = readX()[k.id] || {};
+    var x = { fh: k.fh, mh: k.mh };
     var form = '<div class="gc-setup"><div class="gc-sex" role="group" aria-label="性別">' +
       '<span>性別</span><button type="button" data-gcsex="M" class="' + (k.sex === 'M' ? 'on' : '') + '">男孩</button><button type="button" data-gcsex="F" class="' + (k.sex === 'F' ? 'on' : '') + '">女孩</button></div>' +
       '<label>爸爸身高<input id="gc-fh" type="number" min="120" max="220" step="0.1" inputmode="decimal" value="' + (x.fh || '') + '" placeholder="選填"><span>cm</span></label>' +
       '<label>媽媽身高<input id="gc-mh" type="number" min="120" max="220" step="0.1" inputmode="decimal" value="' + (x.mh || '') + '" placeholder="選填"><span>cm</span></label></div>';
-    var head = '<div class="card bp-box gc"><h3>台灣生長曲線</h3><p class="muted">選好性別，就會用台灣參考值把每次量測畫成曲線、算出百分位。性別和父母身高只存在這台裝置。</p>' + form;
+    var head = '<div class="card bp-box gc"><h3>台灣生長曲線</h3><p class="muted">選好性別，就會用台灣參考值把每次量測畫成曲線、算出百分位。性別和父母身高會和其他紀錄一起保存，也包含在備份檔裡。</p>' + form;
     var a = ageAt(k.birth, today());
     if (!k.sex) return head + '<p class="note">請先選擇性別。</p>' + LIMITS + '</div>';
     if (a >= 18) head += '<p class="note">孩子已滿 18 歲，曲線只畫到 18 歲。</p>';
@@ -246,9 +264,9 @@
   }
   function redraw() { var p = document.getElementById('bp-panel'); if (!p) return; var g = p.querySelector('.gc'); if (g) g.remove(); enhance(); }
   function bindPanel(panel) {
-    panel.querySelectorAll('[data-gcsex]').forEach(function (b) { b.onclick = function () { var k = currentChild(); if (!k) return; var x = readX(); x[k.id] = x[k.id] || {}; x[k.id].sex = b.getAttribute('data-gcsex'); writeX(x); redraw(); }; });
+    panel.querySelectorAll('[data-gcsex]').forEach(function (b) { b.onclick = function () { var k = currentChild(); if (!k) return; setField(k.id, 'sex', b.getAttribute('data-gcsex')); redraw(); }; });
     panel.querySelectorAll('[data-gcm]').forEach(function (b) { b.onclick = function () { metric = b.getAttribute('data-gcm'); redraw(); }; });
-    ['gc-fh', 'gc-mh'].forEach(function (id) { var el = document.getElementById(id); if (!el) return; el.onchange = function () { var k = currentChild(); if (!k) return; var v = parseFloat(el.value); if (el.value && !(v >= 120 && v <= 220)) { el.value = ''; return; } var x = readX(); x[k.id] = x[k.id] || {}; x[k.id][id === 'gc-fh' ? 'fh' : 'mh'] = v || null; writeX(x); redraw(); }; });
+    ['gc-fh', 'gc-mh'].forEach(function (id) { var el = document.getElementById(id); if (!el) return; el.onchange = function () { var k = currentChild(); if (!k) return; var v = parseFloat(el.value); if (el.value && !(v >= 120 && v <= 220)) { el.value = ''; return; } setField(k.id, id === 'gc-fh' ? 'fh' : 'mh', v || null); redraw(); }; });
   }
   /* block growth entries outside birth..18th birthday (capture phase, before blueprint saves) */
   document.addEventListener('click', function (e) {
@@ -279,5 +297,6 @@
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
   new MutationObserver(function () { if (!busy) requestAnimationFrame(enhance); }).observe(app, { childList: true, subtree: true });
+  migrate();
   enhance();
 })();

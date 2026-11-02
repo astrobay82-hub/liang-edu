@@ -173,6 +173,8 @@
     return '<dialog id="bp-dlg" class="bp-dlg"><form method="dialog" id="bp-form"><h2>' + (c.id ? '編輯孩子資料' : '新增孩子') + '</h2>' +
       '<label>暱稱 <span class="req">必填</span><input id="f-name" maxlength="20" required value="' + esc(c.name) + '" placeholder="例如：小寶"></label>' +
       '<label>生日 <span class="req">必填</span><input id="f-bday" type="date" required max="' + today() + '" value="' + esc(c.birthday) + '"></label>' +
+      '<div class="bp-sexrow"><span>性別 <span class="opt">畫生長曲線用</span></span><label><input type="radio" name="f-sex" value="M"' + (c.sex === 'M' ? ' checked' : '') + '> 男孩</label><label><input type="radio" name="f-sex" value="F"' + (c.sex === 'F' ? ' checked' : '') + '> 女孩</label></div>' +
+      '<div class="bp-2col"><label>爸爸身高 <span class="opt">選填</span><input id="f-fh" type="number" min="120" max="220" step="0.1" inputmode="decimal" value="' + esc(c.fh) + '" placeholder="cm"></label><label>媽媽身高 <span class="opt">選填</span><input id="f-mh" type="number" min="120" max="220" step="0.1" inputmode="decimal" value="' + esc(c.mh) + '" placeholder="cm"></label></div>' +
       '<label>出生週數 <span class="opt">早產兒建議填</span><input id="f-ga" type="number" min="22" max="42" step="1" value="' + esc(c.ga) + '" placeholder="例如：34"></label>' +
       '<p class="hint">未滿 37 週出生的孩子，2 歲前會同時顯示「矯正年齡」，發展觀察以矯正年齡為準。請不要填真實姓名或身分證等可辨識資料。</p>' +
       '<div class="row"><button class="btn" type="button" data-close>取消</button>' + (c.id ? '<button class="btn danger" type="button" data-act="del">刪除這位孩子</button>' : '') + '<button class="btn pri" type="submit">儲存</button></div></form></dialog>';
@@ -347,10 +349,13 @@
     $('#bp-form').onsubmit = function (e) {
       e.preventDefault();
       var name = $('#f-name').value.trim(), bd = $('#f-bday').value, ga = $('#f-ga').value;
+      var sx = ($('input[name=f-sex]:checked') || {}).value || null;
+      var ph = function (id) { var v = parseFloat($('#' + id).value); return v >= 120 && v <= 220 ? v : null; };
+      var fh = ph('f-fh'), mh = ph('f-mh');
       if (!name || !bd) { toast('請填暱稱與生日'); return; }
       if (bd > today()) { toast('生日不能晚於今天'); return; }
-      if (c && c.id) { c.name = name; c.birthday = bd; c.ga = ga; }
-      else { var n = { id: uid(), name: name, birthday: bd, ga: ga, obs: {}, logs: [], growth: [], school: [], puberty: [] }; state.children.push(n); state.active = n.id; }
+      if (c && c.id) { c.name = name; c.birthday = bd; c.ga = ga; c.sex = sx; c.fh = fh; c.mh = mh; }
+      else { var n = { id: uid(), name: name, birthday: bd, ga: ga, sex: sx, fh: fh, mh: mh, obs: {}, logs: [], growth: [], school: [], puberty: [] }; state.children.push(n); state.active = n.id; }
       state.stage = null; state.tab = 'dev'; save(); dlg.close(); render(); toast('已儲存');
     };
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
@@ -386,5 +391,15 @@
     Object.keys(dels).forEach(function (k) { $$('[data-' + k + ']').forEach(function (b) { b.onclick = function () { var id = b.getAttribute('data-' + k); c[dels[k]] = c[dels[k]].filter(function (x) { return x.id !== id; }); save(); render(); }; }); });
   }
 
+  /* 給外掛（生長曲線）使用：讀取與更新目前孩子的欄位，寫回同一份資料，備份時一併包含 */
+  window.bpAPI = {
+    child: function () { return child(); },
+    update: function (id, fields) {
+      var c = state.children.filter(function (x) { return x.id === id; })[0];
+      if (!c) return false;
+      Object.keys(fields).forEach(function (k) { c[k] = fields[k]; });
+      return save();
+    }
+  };
   render();
 })();
