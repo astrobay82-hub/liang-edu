@@ -1,5 +1,8 @@
 /assets/*
   Cache-Control: public, max-age=604800
+/cards/line/*
+  Access-Control-Allow-Origin: https://manager.line.biz
+  X-Robots-Tag: noindex
 /cards/*
   Cache-Control: public, max-age=86400
 /*
