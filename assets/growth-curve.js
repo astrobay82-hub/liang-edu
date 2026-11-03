@@ -126,11 +126,7 @@
       else if (dz >= 1.0 && a < (k.sex === 'F' ? 9 : 10)) out.push(['warn', '身高百分位快速往上', '近 ' + yrs + ' 年從 PR ' + prText(B.hz) + ' 到 PR ' + prText(A.hz) + '。年紀小又突然抽高，可以和醫師討論是否需要看骨齡。']);
       if (A.wz != null && B.wz != null && (A.wz - A.hz) - (B.wz - B.hz) >= 0.8) out.push(['warn', '體重增加得比身高快', '體重的百分位往上爬得比身高快，可以先從睡眠、含糖飲料與活動量調整。']);
     }
-    var V = velocity(k);
-    if (V && a >= 3 && a < (k.sex === 'F' ? 9.5 : 10.5)) {
-      if (V.v < 4) out.push(['alert', '一年長 ' + r1(V.v) + ' 公分，偏慢', '青春期前多數孩子一年長約 4–6 公分；低於 4 公分建議和醫師討論。']);
-      else if (V.v >= 8) out.push(['warn', '一年長 ' + r1(V.v) + ' 公分，偏快', '青春期前長得特別快，留意是否有青春期提早的變化。']);
-    }
+    /* 生長速率不自動判讀快慢（與【長高特工局】醫學修訂版一致，交醫師依年齡與青春期判讀） */
     if (A.cat && A.cat !== '正常') out.push([A.cat === '肥胖' ? 'alert' : 'warn', 'BMI ' + r1(A.bmi) + '，' + A.cat, A.cat === '過輕' ? '可以先看看食量、腸胃與作息；持續偏輕請和醫師討論。' : '依衛福部兒童 BMI 建議值判定。可先調整飲食與活動，需要時和醫師討論。']);
     var T = target(k);
     if (T && A.hz != null && a >= 3 && a < 18) { var pj = valOfZ(refAt('h', k.sex, 18), A.hz); if (pj < T.lo) out.push(['warn', '目前軌道低於家庭靶身高範圍', '照目前百分位延伸，成年約 ' + Math.round(pj) + ' cm，低於家庭參考範圍 ' + Math.round(T.lo) + '–' + Math.round(T.hi) + ' cm。先多量幾次確認趨勢。']); }
@@ -221,7 +217,7 @@
       '<div class="gc-read"><div><small>身高　' + esc(last.date) + '</small><b>' + (last.h || '—') + '<i>cm</i></b><span>PR ' + (A.hz == null ? '—' : prText(A.hz)) + '</span>' + meter(A.hz) + '</div>' +
       '<div><small>體重</small><b>' + (last.w || '—') + '<i>kg</i></b><span>PR ' + (A.wz == null ? '—' : prText(A.wz)) + '</span>' + meter(A.wz) + '</div>' +
       '<div><small>BMI</small><b>' + (A.bmi ? r1(A.bmi) : '—') + '</b><span>' + (A.cat ? '<em class="gc-pill ' + cls + '">' + A.cat + '</em>' : '') + '</span></div>' +
-      '<div><small>一年長高</small><b>' + (V ? r1(V.v) : '—') + '<i>cm</i></b><span>' + (V ? '同齡中位數約 ' + r1(V.ref) : '需相隔 6 個月以上兩筆') + '</span></div></div>' +
+      '<div><small>一年長高</small><b>' + (V ? r1(V.v) : '—') + '<i>cm</i></b><span>' + (V ? '快慢請由醫師判讀' : '需相隔 6 個月以上兩筆') + '</span></div></div>' +
       '<div class="gc-tabs" role="group" aria-label="曲線種類"><button type="button" data-gcm="h" class="' + (metric === 'h' ? 'on' : '') + '">身高</button><button type="button" data-gcm="w" class="' + (metric === 'w' ? 'on' : '') + '">體重</button><button type="button" data-gcm="bmi" class="' + (metric === 'bmi' ? 'on' : '') + '">BMI</button></div>' +
       '<div class="gc-chart">' + chart(kk) + '</div>' +
       '<p class="gc-leg">' + (metric === 'bmi' ? '綠：正常　淡橘：過輕／過重　紅：肥胖' : '深色帶：P25–P75　淺色帶：P3–P97　虛線：P50 中位數') + '　橘線：' + esc(k.name) + (k.puberty.length ? '　直線：青春期觀察紀錄' : '') + '</p>' +
