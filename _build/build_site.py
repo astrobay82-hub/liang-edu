@@ -6,6 +6,7 @@ from refs import refs_for
 from checklists import checklist_for
 from sys_icons import ICONS as SYS_ICONS
 from topics import TOPICS, SLUG_NAME, topics_for, qr_svg
+import media as MEDIA
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -221,7 +222,7 @@ def shell(title, desc, path, body, active='', head_extra='', og_image='/assets/o
 {body}
 </main>
 <footer class="site"><div class="wrap">
-  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">雅淳醫師成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
+  <div class="cols"><a href="/">首頁</a><a href="/#topics">文章分類</a><a href="/growth">雅淳醫師成長手帳</a><a href="/notes">看診手記</a><a href="/doctor">醫師介紹與門診</a><a href="/media">媒體報導與影音</a><a href="{REG}" target="_blank" rel="noopener">網路掛號</a><a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a></div>
   <p>本網站內容為一般衛教資訊，不能取代醫師面對面診察。孩子精神活動力明顯變差、呼吸困難、意識改變或持續高燒等情況，請立即就醫。</p>
   <p>相關網站：<a href="https://chen.ialdsm.com/" target="_blank" rel="noopener">陳相如中醫師｜中醫傷科・運動照護</a>　<a href="https://ialdsm.com/" target="_blank" rel="noopener">國際全齡發展與運動醫學協會</a></p>
   <p>© 梁雅淳醫師｜台中慈濟醫院中醫部中醫兒科　內容更新：{UPDATED}</p>
@@ -411,22 +412,8 @@ notes_body = f'''<div class="narrow"><section class="hero"><p class="eyebrow">�
 open(os.path.join(OUT, 'notes.html'), 'w', encoding='utf-8').write(shell('中醫兒科看診手記50篇 - 梁雅淳醫師', '發燒手腳冰冷、半夜鼻塞、孩子越累越亢奮？梁雅淳醫師整理 50 則診間真實觀察，一則一個居家照護重點，點開看看你家是否也遇過。', '/notes', notes_body, active='notes'))
 
 # ---------------- doctor ----------------
-VIDS = [
-    ('HMJ6ulbYtbs', '破解兒童反覆呼吸道感染', '2025-04-01'),
-    ('zhMQwtoxikE', '這樣做，孩子睡得香！提升睡眠的3大祕訣', '2025-03-31'),
-    ('Qe2YuupYWQY', '中醫幫忙 腸胃變好：改善腸躁症，讓孩子遠離腹痛', '2025-04-02'),
-    ('OTKrGFEjEmM', '孩子扭傷？中醫來復位！運動傷害與骨架調整', '2025-04-03'),
-    ('cxf7QtYx6kY', '孩子發育慢？中醫幫助成長', '2025-04-04'),
-    ('C-MoLmt4qnk', '3階段婦科煩惱全解：熱潮紅、失眠、頻尿調理', '2025-10-20'),
-    ('SVluHvjits8', '3招解決乾澀頻尿：更年期保養', '2025-10-21'),
-    ('YURfAL60zZI', '5招養好子宮：姿勢不正，子宮肌瘤找上門', '2025-10-22'),
-    ('PHCD9TNoECw', '坐姿正確就能變健康：改善自律神經失調、經痛失眠', '2025-10-23'),
-]
-NEWS = [
-    ('長假後常見開學症候群 中醫對症四方協助克服', 'https://taichung.tzuchi.com.tw/index.php/xun-xi-zhuan-qu/xin-wen-bao-dao/geng-duo-xin-wen-bao-dao/geng-duo-xin-wen-bao-dao-70/2025-02-02', '台中慈濟醫院新聞稿'),
-    ('中醫傷科結合西醫復健 臺中慈濟醫院推展運動醫學', 'https://taichung.tzuchi.com.tw/index.php/xun-xi-zhuan-qu/xin-wen-bao-dao/geng-duo-xin-wen-bao-dao/geng-duo-xin-wen-bao-dao-70/2023-06-05-08-18-18', '台中慈濟醫院新聞稿'),
-    ('社區推廣中醫八段錦 改善長輩常見症狀', 'https://taichung.tzuchi.com.tw/index.php/xun-xi-zhuan-qu/xin-wen-bao-dao/geng-duo-xin-wen-bao-dao/geng-duo-xin-wen-bao-dao-70/she-qu-tui-guang-zhong-yi-ba-duan-jin-gai-shan-zhang-bei-chang-jian-zheng-zhuang', '台中慈濟醫院新聞稿'),
-]
+VIDS = [(v, t, d) for v, t, d in MEDIA.DAAI[:6]]
+NEWS = [(t, u, src) for d, t, u, src, _ in MEDIA.NEWS[:4]]
 vid_html = ''.join(f'<a class="vid" href="https://www.youtube.com/watch?v={v}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi_webp/{v}/hqdefault.webp" alt="" loading="lazy" width="480" height="270"><div>{e(t)}<small>大愛學漢醫・{d}</small></div></a>' for v, t, d in VIDS)
 news_html = ''.join(f'<a class="lk" href="{u}" target="_blank" rel="noopener"><span class="ic" style="background:#8a6d3b">新聞</span><span><b>{e(t)}</b><small>{s}</small></span></a>' for t, u, s in NEWS)
 H = {('一', '早'): ('228診', '第一院區'), ('三', '早'): ('178診', '第二院區'), ('六', '早'): ('178診', '第二院區'),
@@ -469,12 +456,42 @@ dr_body = f'''<div class="wrap">
   <a class="lk" href="https://chen.ialdsm.com/" target="_blank" rel="noopener"><span class="ic" style="background:#3F5E7A">陳</span><span><b>陳相如中醫師｜中醫傷科・運動照護</b><small>台中慈濟醫院中醫部傷科門診、動作解碼與水墨衛教影音</small></span></a>
   <a class="lk" href="https://ialdsm.com/" target="_blank" rel="noopener"><span class="ic" style="background:#8a6d3b">協</span><span><b>國際全齡發展與運動醫學協會</b><small>全齡發展與運動醫學的推廣與交流</small></span></a>
 </div>
-<div class="sec-title"><h2>大愛電視《大愛學漢醫》節目</h2><a href="https://www.youtube.com/results?search_query=%E6%A2%81%E9%9B%85%E6%B7%B3+%E5%A4%A7%E6%84%9B%E5%AD%B8%E6%BC%A2%E9%86%AB" target="_blank" rel="noopener">在 YouTube 看更多 →</a></div>
+<div class="sec-title"><h2>大愛電視《大愛學漢醫》節目</h2><a href="/media#daai">全部 {len(MEDIA.DAAI)} 集 →</a></div>
 <div class="vids">{vid_html}</div>
-<div class="sec-title"><h2>新聞報導</h2></div>
+<div class="sec-title"><h2>新聞報導</h2><a href="/media">媒體報導與影音總覽 →</a></div>
 <div class="links">{news_html}</div>
 </div>'''
 open(os.path.join(OUT, 'doctor.html'), 'w', encoding='utf-8').write(shell('台中慈濟中醫兒科主任 門診時間與掛號 - 梁雅淳醫師', '想找台中中醫兒科？梁雅淳醫師專長兒童過敏、脊椎側彎、性早熟與青春期長高調理。查看最新門診時間，線上掛號或加入官方 LINE 諮詢。', '/doctor', dr_body, active='doctor', head_extra=dr_ld, og_image='/assets/dr-liang.webp', og_type='profile'))
+
+# ---------------- media ----------------
+def _ymd(d):
+    y, m, dd = d.split('-')
+    return f'{y}.{m}.{dd}'
+m_news = ''.join(f'<a class="lk" href="{u}" target="_blank" rel="noopener"><span class="ic" style="background:#8a6d3b">新聞</span><span><b>{e(t)}</b><small>{e(src)}・{_ymd(d)}｜{e(sm)}</small></span></a>' for d, t, u, src, sm in MEDIA.NEWS)
+m_daai = ''.join(f'<a class="vid" href="https://www.youtube.com/watch?v={v}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><div>{e(t)}<small>大愛學漢醫・{_ymd(d)}</small></div></a>' for v, t, d in MEDIA.DAAI)
+m_shorts = ''.join(f'<a class="vid" href="https://www.youtube.com/shorts/{v}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/{v}/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><div>{e(t)}<small>YouTube 短片</small></div></a>' for v, t in MEDIA.SHORTS)
+m_events = ''.join(f'<a class="lk" href="{u}" target="_blank" rel="noopener"><span class="ic" style="background:#3A6356">慈</span><span><b>{e(t)}</b><small>{e(src)}・{_ymd(d)}｜{e(sm)}</small></span></a>' for d, t, u, src, sm in MEDIA.EVENTS)
+media_body = f"""<div class="wrap">
+<section class="hero"><p class="eyebrow">媒體報導・影音・慈濟活動</p><h1>梁雅淳醫師的媒體報導與衛教影音</h1>
+<p class="lead">整理梁醫師在大愛電視、台中慈濟醫院與個人頻道的新聞報導、節目與衛教短片，以及參與慈濟志工、社區與院內活動的紀錄。每一則都連到原始出處，點開就能看。</p>
+<div class="pills" role="navigation" aria-label="跳到分類"><a class="chip" href="#news">新聞報導（{len(MEDIA.NEWS)}）</a><a class="chip" href="#daai">大愛學漢醫（{len(MEDIA.DAAI)}）</a><a class="chip" href="#shorts">衛教短片（{len(MEDIA.SHORTS)}）</a><a class="chip" href="#events">慈濟活動（{len(MEDIA.EVENTS)}）</a></div></section>
+<div class="sec-title" id="news"><h2>新聞報導</h2></div>
+<div class="links">{m_news}</div>
+<div class="sec-title" id="daai"><h2>大愛電視《大愛學漢醫》節目</h2><a href="https://www.youtube.com/results?search_query=%E6%A2%81%E9%9B%85%E6%B7%B3+%E5%A4%A7%E6%84%9B%E5%AD%B8%E6%BC%A2%E9%86%AB" target="_blank" rel="noopener">在 YouTube 搜尋 →</a></div>
+<p class="msub" style="color:var(--muted);margin:-6px 0 12px;font-size:14px">每集約 11 分鐘，兒童保健與婦科兩個系列，含居家穴位按摩與動作示範。</p>
+<div class="vids">{m_daai}</div>
+<div class="sec-title" id="shorts"><h2>雅淳醫師衛教短片</h2><a href="{MEDIA.CHANNEL}" target="_blank" rel="noopener">前往 YouTube 頻道 →</a></div>
+<p class="msub" style="color:var(--muted);margin:-6px 0 12px;font-size:14px">一分鐘內的居家照護小技巧：推拿、食療、睡眠與專注力。</p>
+<div class="vids">{m_shorts}</div>
+<div class="sec-title" id="events"><h2>慈濟活動與院區紀事</h2></div>
+<div class="links">{m_events}</div>
+<p class="note" style="margin-top:18px">影片與報導內容版權屬原發布單位；本頁僅提供連結。媒體採訪或講座邀約，請透過<a href="{LINE_DR}" target="_blank" rel="noopener">雅淳醫師官方 LINE</a>聯繫。</p>
+{DOCBOX}
+</div>"""
+media_ld = jsonld({'@context': 'https://schema.org', '@type': 'CollectionPage', 'name': '梁雅淳醫師媒體報導與衛教影音', 'url': SITE + '/media', 'about': DR_PERSON,
+                   'hasPart': [{'@type': 'NewsArticle', 'headline': t, 'url': u, 'datePublished': d} for d, t, u, _, _ in MEDIA.NEWS]
+                   + [{'@type': 'VideoObject', 'name': t, 'url': f'https://www.youtube.com/watch?v={v}', 'uploadDate': d, 'thumbnailUrl': f'https://i.ytimg.com/vi/{v}/hqdefault.jpg', 'description': f'大愛學漢醫：{t}（主講：梁雅淳醫師）'} for v, t, d in MEDIA.DAAI]})
+open(os.path.join(OUT, 'media.html'), 'w', encoding='utf-8').write(shell('媒體報導與衛教影音 - 梁雅淳醫師', '大愛新聞、大愛學漢醫節目、台中慈濟醫院報導與慈濟活動紀錄一次看。兒童過敏、睡眠、腸胃、婦科保養影片，點開立即觀看。', '/media', media_body, active='doctor', head_extra=media_ld))
 
 # ---------------- growth tool ----------------
 art_titles = {x['id']: x['title'] for x in flat_index}
@@ -528,7 +545,7 @@ for a in _rd:
 
 # ---------------- 404, sitemap, robots ----------------
 open(os.path.join(OUT, '404.html'), 'w', encoding='utf-8').write(shell('找不到頁面｜梁雅淳醫師婦兒中醫衛教', '找不到這個頁面。', '/404', '<div class="narrow"><section class="hero"><h1>找不到這個頁面</h1><p class="lead">網址可能已更新。可以回首頁用搜尋找文章。</p><a class="btn pri" href="/">回首頁</a></section></div>'))
-urls = [('/', '1.0'), ('/doctor', '0.8'), ('/growth', '0.8'), ('/notes', '0.7')] + [(f'/t/{s}', '0.7') for s, _, _, _ in TOPICS] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
+urls = [('/', '1.0'), ('/doctor', '0.8'), ('/growth', '0.8'), ('/notes', '0.7'), ('/media', '0.7')] + [(f'/t/{s}', '0.7') for s, _, _, _ in TOPICS] + [(f'/a/{x["id"]}', '0.6') for x in flat_index]
 open(os.path.join(OUT, 'sitemap.xml'), 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{SITE}{u}</loc><lastmod>{UPDATED}</lastmod><priority>{p}</priority></url>\n' for u, p in urls) + '</urlset>\n')
 open(os.path.join(OUT, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n')
 print('pages', len(flat_index), 'notes', len(notes))
