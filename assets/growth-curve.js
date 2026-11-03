@@ -2,7 +2,7 @@
    接在 blueprint.js 之後載入，不修改手帳原本的程式與資料格式。
    - 讀取手帳的 localStorage（shanchun_growth_v1）中的生日與身高體重紀錄
    - 性別與父母身高另存於 liang_growth_curve_v1（只存在這台裝置）
-   - 在「生長・青春期」分頁加上台灣百分位曲線、生長提醒、遺傳身高與限制說明
+   - 在「生長・青春期」分頁加上台灣百分位曲線、生長提醒、家庭靶身高與限制說明
    - 在「回診摘要」補上百分位與生長速度
    參考：國健署兒童及青少年生長曲線（0–5 歲 WHO；7–18 歲 陳偉德、張美惠 2010），
         衛福部 102 年兒童及青少年 BMI 建議值。 */
@@ -96,10 +96,16 @@
   function an(k, r) { var a = ageAt(k.birth, r.date), o = { age: a, young: a < 2 }; var h = +r.h, w = +r.w;
     if (h > 0) o.hz = zOf(refAt('h', k.sex, a), h); if (w > 0) o.wz = zOf(refAt('w', k.sex, a), w);
     if (h > 0 && w > 0) { o.bmi = w / Math.pow(h / 100, 2); o.cat = bmiCat(k.sex, a, o.bmi); } return o; }
-  function target(k) { if (!(k.fh > 0 && k.mh > 0)) return null; var m = (k.fh + k.mh + (k.sex === 'M' ? 13 : -13)) / 2; return { mid: m, lo: m - 7.5, hi: m + 7.5 }; }
+  /* 與【長高特工局】醫學修訂版一致：家庭靶身高 (父+母±13)/2，參考範圍 ±8.5 cm（Children's Mercy） */
+  var TH_RANGE = 8.5;
+  function target(k) { if (!(k.fh > 0 && k.mh > 0)) return null; var m = (k.fh + k.mh + (k.sex === 'M' ? 13 : -13)) / 2; return { mid: m, lo: m - TH_RANGE, hi: m + TH_RANGE }; }
+  /* 等同 Excel EDATE(日期,n)：推 n 個曆月，月底自動對齊（8/31+6 個月＝2/28） */
+  function addMonths(iso, n) { var p = iso.split('-').map(Number), t = new Date(Date.UTC(p[0], p[1] - 1 + n, 1)), last = new Date(Date.UTC(t.getUTCFullYear(), t.getUTCMonth() + 1, 0)).getUTCDate(); t.setUTCDate(Math.min(p[2], last)); return t.toISOString().slice(0, 10); }
+  /* 生長速率：與 Excel 相同 (身高差)/(日數差)×365.25，兩點至少相隔 6 個曆月（Excel：A>=EDATE(A0,6)）；
+     手帳取「最新一筆」對「最接近一年前、且符合 6 個曆月」的那一筆（近一年速率）。 */
   function velocity(k) { var hs = k.recs.filter(function (r) { return +r.h > 0; }); if (hs.length < 2) return null;
     var last = hs[hs.length - 1], la = ageAt(k.birth, last.date), best = null;
-    hs.slice(0, -1).forEach(function (r) { var d = la - ageAt(k.birth, r.date); if (d >= 0.45 && (!best || Math.abs(d - 1) < Math.abs(best.d - 1))) best = { r: r, d: d }; });
+    hs.slice(0, -1).forEach(function (r) { var d = la - ageAt(k.birth, r.date); if (last.date < addMonths(r.date, 6)) return; if (!best || Math.abs(d - 1) < Math.abs(best.d - 1)) best = { r: r, d: d }; });
     if (!best) return null; var mid = (la + ageAt(k.birth, best.r.date)) / 2;
     return { v: (last.h - best.r.h) / best.d, from: best.r, to: last, ref: refAt('h', k.sex, Math.min(18, mid + 0.5))[2] - refAt('h', k.sex, Math.max(0, mid - 0.5))[2] }; }
 
@@ -127,7 +133,7 @@
     }
     if (A.cat && A.cat !== '正常') out.push([A.cat === '肥胖' ? 'alert' : 'warn', 'BMI ' + r1(A.bmi) + '，' + A.cat, A.cat === '過輕' ? '可以先看看食量、腸胃與作息；持續偏輕請和醫師討論。' : '依衛福部兒童 BMI 建議值判定。可先調整飲食與活動，需要時和醫師討論。']);
     var T = target(k);
-    if (T && A.hz != null && a >= 3 && a < 18) { var pj = valOfZ(refAt('h', k.sex, 18), A.hz); if (pj < T.lo) out.push(['warn', '目前軌道低於遺傳身高範圍', '照目前百分位延伸，成年約 ' + Math.round(pj) + ' cm，低於遺傳範圍 ' + Math.round(T.lo) + '–' + Math.round(T.hi) + ' cm。先多量幾次確認趨勢。']); }
+    if (T && A.hz != null && a >= 3 && a < 18) { var pj = valOfZ(refAt('h', k.sex, 18), A.hz); if (pj < T.lo) out.push(['warn', '目前軌道低於家庭靶身高範圍', '照目前百分位延伸，成年約 ' + Math.round(pj) + ' cm，低於家庭參考範圍 ' + Math.round(T.lo) + '–' + Math.round(T.hi) + ' cm。先多量幾次確認趨勢。']); }
     var days = Math.floor((new Date(today()) - new Date(last.date)) / 864e5);
     if (days >= 120) out.push(['info', '距離上次量測 ' + days + ' 天', '建議約每 3 個月量一次：同一個時段、赤腳、靠牆站直。']);
     if (!out.some(function (o) { return o[0] === 'alert' || o[0] === 'warn'; })) out.unshift(['ok', '目前沿著自己的曲線前進', recs.length < 3 ? '再累積幾筆、間隔半年以上的紀錄，才看得出生長速度與趨勢。' : '穩定沿著原本的百分位長，比百分位高低更重要。']);
@@ -172,7 +178,7 @@
       var rv = refAt(metric, k.sex, x1);
       ['3', '25', '50', '75', '97'].forEach(function (t, i) { s += '<text class="gc-pl" x="' + (W - R + 6) + '" y="' + (Y(rv[i]) + 4) + '">P' + t + '</text>'; });
     }
-    if (showT) { var tx = X(Math.min(18, x1)); s += '<rect class="gc-t" x="' + (tx - 6) + '" y="' + Y(Tg.hi) + '" width="12" height="' + (Y(Tg.lo) - Y(Tg.hi)) + '" rx="3"/><line class="gc-tl" x1="' + (tx - 10) + '" x2="' + (tx + 10) + '" y1="' + Y(Tg.mid) + '" y2="' + Y(Tg.mid) + '"/><text class="gc-tt" x="' + (tx - 12) + '" y="' + (Y(Tg.hi) - 6) + '" text-anchor="end">遺傳身高 ' + Math.round(Tg.mid) + '</text>'; }
+    if (showT) { var tx = X(Math.min(18, x1)); s += '<rect class="gc-t" x="' + (tx - 6) + '" y="' + Y(Tg.hi) + '" width="12" height="' + (Y(Tg.lo) - Y(Tg.hi)) + '" rx="3"/><line class="gc-tl" x1="' + (tx - 10) + '" x2="' + (tx + 10) + '" y1="' + Y(Tg.mid) + '" y2="' + Y(Tg.mid) + '"/><text class="gc-tt" x="' + (tx - 12) + '" y="' + (Y(Tg.hi) - 6) + '" text-anchor="end">家庭靶身高 ' + Math.round(Tg.mid) + '</text>'; }
     k.puberty.forEach(function (p) { var pa = ageAt(k.birth, p.date); if (pa >= x0 && pa <= x1) s += '<line class="gc-ev" x1="' + X(pa) + '" x2="' + X(pa) + '" y1="' + T + '" y2="' + (H - B) + '"/><text class="gc-evt" x="' + (X(pa) + 3) + '" y="' + (T + 11) + '">' + esc(String(p.sign || '').slice(0, 6)) + '</text>'; });
     var pts = recs.filter(function (o) { return val(o) > 0; }).map(function (o) { return { o: o, x: X(o.A.age), y: Y(val(o)) }; });
     if (pts.length > 1) s += '<path class="gc-line" d="' + P(pts.map(function (p) { return [p.x, p.y]; })) + '"/>';
@@ -186,9 +192,10 @@
     '<li><b>參考值：</b>國健署兒童及青少年生長曲線，0–5 歲採 WHO 標準，7–18 歲依陳偉德、張美惠 2010 年台灣資料；BMI 採衛福部 102 年兒童及青少年建議值。</li>' +
     '<li><b>年齡範圍：</b>只計算 2–18 歲。未滿 2 歲（含早產兒的矯正年齡）請用兒童健康手冊或國健署工具判讀。</li>' +
     '<li><b>估算方式：</b>參考表每一歲一個數值，中間月齡以直線內插估算，百分位可能有幾個百分點的差距；低於 3 或高於 97 只標示「&lt;3」「&gt;97」，不再細分。</li>' +
-    '<li><b>量測誤差：</b>不同時段、有沒有穿鞋、姿勢不同，身高可差到 1 公分。判斷趨勢至少要兩筆、間隔半年以上；單次數字不要過度解讀。</li>' +
+    '<li><b>量測方式：</b>赤腳、硬地、背靠牆站直、平視，同一台設備、相近時段。每次量兩次，相差超過 0.5 公分請重量，再把兩次的平均填進來。不同時段或姿勢，身高可差到 1 公分。</li>' +
     '<li><b>成年身高延伸：</b>假設孩子一直沿著目前的百分位長大。青春期早或晚都會讓它失準，它不是骨齡預測，只當方向參考。</li>' +
-    '<li><b>遺傳身高：</b>（父＋母±13）÷2，±7.5 公分是多數孩子落點的統計範圍，不是保證。</li>' +
+    '<li><b>家庭靶身高：</b>（父＋母±13）÷2，參考範圍 ±8.5 公分。這是家庭參考，不是成人身高的預測或保證；父母身高請填實際量測值。</li>' +
+    '<li><b>生長速率：</b>（身高差）÷（相隔天數）×365.25。兩筆至少相隔 6 個曆月才計算，取最新一筆和最接近一年前的那一筆。這個數字只描述過去，不預測未來；青春期前後的快慢需由醫師依年齡與發育判讀。</li>' +
     '<li><b>BMI：</b>不分肌肉和脂肪，運動量大、肌肉多的孩子可能被判為過重。</li>' +
     '<li><b>提醒的意思：</b>這裡的提醒是「建議和醫師討論」的時機，不是診斷，也不能取代醫師診察與骨齡、抽血等檢查。</li></ul></details>';
 
@@ -214,14 +221,14 @@
       '<div class="gc-read"><div><small>身高　' + esc(last.date) + '</small><b>' + (last.h || '—') + '<i>cm</i></b><span>PR ' + (A.hz == null ? '—' : prText(A.hz)) + '</span>' + meter(A.hz) + '</div>' +
       '<div><small>體重</small><b>' + (last.w || '—') + '<i>kg</i></b><span>PR ' + (A.wz == null ? '—' : prText(A.wz)) + '</span>' + meter(A.wz) + '</div>' +
       '<div><small>BMI</small><b>' + (A.bmi ? r1(A.bmi) : '—') + '</b><span>' + (A.cat ? '<em class="gc-pill ' + cls + '">' + A.cat + '</em>' : '') + '</span></div>' +
-      '<div><small>一年長高</small><b>' + (V ? r1(V.v) : '—') + '<i>cm</i></b><span>' + (V ? '同齡中位數約 ' + r1(V.ref) : '需間隔半年以上兩筆') + '</span></div></div>' +
+      '<div><small>一年長高</small><b>' + (V ? r1(V.v) : '—') + '<i>cm</i></b><span>' + (V ? '同齡中位數約 ' + r1(V.ref) : '需相隔 6 個月以上兩筆') + '</span></div></div>' +
       '<div class="gc-tabs" role="group" aria-label="曲線種類"><button type="button" data-gcm="h" class="' + (metric === 'h' ? 'on' : '') + '">身高</button><button type="button" data-gcm="w" class="' + (metric === 'w' ? 'on' : '') + '">體重</button><button type="button" data-gcm="bmi" class="' + (metric === 'bmi' ? 'on' : '') + '">BMI</button></div>' +
       '<div class="gc-chart">' + chart(kk) + '</div>' +
       '<p class="gc-leg">' + (metric === 'bmi' ? '綠：正常　淡橘：過輕／過重　紅：肥胖' : '深色帶：P25–P75　淺色帶：P3–P97　虛線：P50 中位數') + '　橘線：' + esc(k.name) + (k.puberty.length ? '　直線：青春期觀察紀錄' : '') + '</p>' +
       '<h4>生長提醒</h4><ul class="gc-al">' + compass(kk).map(function (o) { return '<li class="' + o[0] + '"><b>' + esc(o[1]) + '</b><span>' + esc(o[2]) + '</span></li>'; }).join('') + '</ul>' +
-      '<h4>遺傳身高與目前軌道</h4><dl class="gc-gen"><dt>遺傳目標身高</dt><dd>' + (Tg ? r1(Tg.mid) + ' cm（' + Math.round(Tg.lo) + '–' + Math.round(Tg.hi) + '）' : '填入父母身高即可計算') + '</dd>' +
+      '<h4>家庭靶身高與目前軌道</h4><dl class="gc-gen"><dt>家庭靶身高</dt><dd>' + (Tg ? r1(Tg.mid) + ' cm（' + Math.round(Tg.lo) + '–' + Math.round(Tg.hi) + '）' : '填入父母身高即可計算') + '</dd>' +
       '<dt>照目前百分位延伸到成年</dt><dd>' + (pj ? '約 ' + Math.round(pj) + ' cm' : '—') + '</dd>' +
-      '<dt>兩者比較</dt><dd>' + (Tg && pj ? (pj < Tg.lo ? '低於遺傳範圍' : pj > Tg.hi ? '高於遺傳範圍' : '在遺傳範圍內') : '—') + '</dd></dl>' +
+      '<dt>兩者比較</dt><dd>' + (Tg && pj ? (pj < Tg.lo ? '低於家庭參考範圍' : pj > Tg.hi ? '高於家庭參考範圍' : '在家庭參考範圍內') : '—') + '</dd></dl>' +
       LIMITS + '</div>';
   }
 
@@ -233,7 +240,7 @@
     var L = ['生長曲線（台灣參考值，' + (k.sex === 'M' ? '男' : '女') + '）：',
       '・' + last.date + '（' + ageText(A.age) + '）身高 ' + (last.h || '—') + ' cm／PR ' + (A.hz == null ? '—' : prText(A.hz)) + '，體重 ' + (last.w || '—') + ' kg／PR ' + (A.wz == null ? '—' : prText(A.wz)) + (A.bmi ? '，BMI ' + r1(A.bmi) + '（' + A.cat + '）' : '')];
     if (V) L.push('・一年長高 ' + r1(V.v) + ' cm（' + V.from.date + ' 至 ' + V.to.date + '）');
-    if (Tg) L.push('・遺傳目標身高 ' + r1(Tg.mid) + ' cm（父 ' + k.fh + '／母 ' + k.mh + '）');
+    if (Tg) L.push('・家庭靶身高 ' + r1(Tg.mid) + ' cm（父 ' + k.fh + '／母 ' + k.mh + '）');
     var al = compass({ id: k.id, name: k.name, birth: k.birth, sex: k.sex, fh: k.fh, mh: k.mh, recs: valid, puberty: k.puberty }).filter(function (o) { return o[0] === 'alert' || o[0] === 'warn'; });
     if (al.length) L.push('・工具提醒：' + al.map(function (o) { return o[1]; }).join('；'));
     return L.join('\n');
