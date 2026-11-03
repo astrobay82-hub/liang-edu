@@ -7,6 +7,7 @@ from checklists import checklist_for
 from sys_icons import ICONS as SYS_ICONS
 from topics import TOPICS, SLUG_NAME, topics_for, qr_svg
 import media as MEDIA
+from visual_sets import VISUAL_SETS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.dirname(HERE)
@@ -309,6 +310,18 @@ for th in themes:
         related += [x for x in tops if x['id'] != tid and x['id'] not in cl_ids][max(0, i - 2):max(0, i - 2) + max(0, 4 - len(related))]
         related = related[:6]
         rel_html = '<ul class="alist">' + ''.join(f'<li><a class="arow" href="/a/{x["id"]}"><div class="t">{e(x["title"])}</div><div class="s">{e(x["subtitle"])}</div></a></li>' for x in related) + '</ul>'
+        vs = VISUAL_SETS.get(tid)
+        visual_html = ''
+        if vs:
+            figs = ''.join(
+                f'<figure class="vcard"><a href="/cards/visual/{tid}-{c["n"]}.webp" target="_blank" rel="noopener" aria-label="放大看：{e(c["title"])}">'
+                f'<img src="/cards/visual/{tid}-{c["n"]}.webp" width="1920" height="1035" alt="{e(c["title"])}圖卡：{e(c["points"][0])}" loading="lazy" decoding="async"></a>'
+                f'<figcaption><b>{e(c["title"])}</b><ul>' + ''.join(f'<li>{e(x)}</li>' for x in c['points']) + '</ul></figcaption></figure>'
+                for c in vs['cards'])
+            visual_html = (f'<section class="block visual" id="visual"><h2><span class="tag">圖解</span>{e(vs["heading"])}</h2>'
+                           f'<p class="note">{e(vs["intro"])}點圖可放大。</p>{figs}'
+                           f'<a class="card vline" href="{LINE_DR}" target="_blank" rel="noopener"><span class="ic">LINE</span><div><b>想把整組 {vs["total"]} 張高解析圖卡存在手機？</b>'
+                           f'<p>加入雅淳醫師官方 LINE，輸入「{e(vs["line_kw"])}」即可領取（含不公開的就醫備忘卡）。</p></div></a></section>\n')
         checks = checklist_for(t)
         check_html = ''.join(f'<label><input type="checkbox" value="{e(c)}"><span>{e(c)}</span></label>' for c in checks)
         desc = desc_of(t)
@@ -336,9 +349,9 @@ for th in themes:
 </div>
 <p class="focus"><small>醫師叮嚀</small>{e(t['focus'])}</p>
 {('<p class="note" style="margin:-6px 0 18px">' + e(t['notice']) + '</p>') if t.get('notice') else ''}
-<nav class="toc" aria-label="本文段落"><a href="#quick">重點速讀</a><a href="#detail">詳細衛教</a><a href="#tcm">中醫觀點</a><a href="#flag">何時就醫</a><a href="#card">衛教圖卡</a><a href="#refs">參考資料</a></nav>
+<nav class="toc" aria-label="本文段落"><a href="#quick">重點速讀</a>{'<a href="#visual">圖解重點</a>' if vs else ''}<a href="#detail">詳細衛教</a><a href="#tcm">中醫觀點</a><a href="#flag">何時就醫</a><a href="#card">衛教圖卡</a><a href="#refs">參考資料</a></nav>
 <section class="block" id="quick"><h2><span class="tag">3 分鐘</span>重點速讀</h2><div class="prose">{prose(t['ext_reading_500'])}</div></section>
-<section class="block" id="detail"><h2><span class="tag">深入</span>詳細衛教</h2>{secs}</section>
+{visual_html}<section class="block" id="detail"><h2><span class="tag">深入</span>詳細衛教</h2>{secs}</section>
 <section class="block" id="tcm"><h2><span class="tag">中醫</span>中醫怎麼看</h2><div class="tcm"><dl><dt>相關臟腑</dt><dd>{e(t['tcm_organ'])}</dd><dt>常見證型</dt><dd>{e(t['pattern'])}</dd></dl><div class="prose">{prose(t['tcm_view'])}</div></div></section>
 <section class="block" id="flag"><div class="flag"><h2>何時應該就醫評估？</h2>{flag_html}<p class="er">若出現呼吸困難、意識不清、抽搐不止、持續高燒或精神活動力明顯變差，請直接就醫或撥打 119。</p></div></section>
 <section class="block infocard" id="card"><h2><span class="tag">可存圖</span>衛教圖卡</h2>
