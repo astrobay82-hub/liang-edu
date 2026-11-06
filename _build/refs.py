@@ -25,6 +25,9 @@ add('wetcough', 'Chang AB, et al. Management of children with chronic wet cough 
 add('epistaxis', 'Tunkel DE, et al. Clinical practice guideline: nosebleed (epistaxis). Otolaryngol Head Neck Surg. 2020;162(1_suppl):S1-S38.', 'Clinical Practice Guideline: Nosebleed (Epistaxis)')
 add('tonsil', 'Mitchell RB, et al. Clinical practice guideline: tonsillectomy in children (update). Otolaryngol Head Neck Surg. 2019;160(1_suppl):S1-S42.', 'Clinical Practice Guideline: Tonsillectomy in Children (Update)')
 add('myopia', 'Wu PC, et al. Myopia prevention and outdoor light intensity in a school-based cluster randomized trial. Ophthalmology. 2018;125(8):1239-1250.', 'Myopia Prevention and Outdoor Light Intensity in a School-Based Cluster Randomized Trial')
+add('choking', 'Committee on Injury, Violence, and Poison Prevention. Prevention of choking among children. Pediatrics. 2010;125(3):601-607.', 'Prevention of choking among children')
+add('aha2025', 'American Heart Association & American Academy of Pediatrics. 2025 Guidelines for CPR and Emergency Cardiovascular Care：Pediatric Basic and Advanced Life Support（含嬰幼兒異物哽塞處置）.', url='https://cpr.heart.org/')
+add('nfa', '內政部消防署：民眾急救教育與哈姆立克法、CPR 衛教資源。', url='https://www.nfa.gov.tw/')
 add('hpa', '衛生福利部國民健康署：兒童及青少年健康、視力保健與生長發育衛教資源。', url='https://www.hpa.gov.tw/')
 add('urti', 'Thompson M, et al. Duration of symptoms of respiratory tract infections in children: systematic review. BMJ. 2013;347:f7027.', 'Duration of symptoms of respiratory tract infections in children: systematic review')
 add('honey', 'Oduwole O, et al. Honey for acute cough in children. Cochrane Database Syst Rev. 2018;4:CD007094.', 'Honey for acute cough in children')
@@ -200,7 +203,7 @@ OVERRIDE = {
  'S05-15': ['torti'], 'S05-16': ['vitd', 'shortstat'], 'S05-17': ['media'], 'S05-36': ['cpp', 'vitd'],
  'S06-06': ['emoreg', 'devscreen'], 'S06-07': ['feeding', 'responsive'], 'S06-11': ['burnout', 'sleepdur', 'fever'],
  'S06-13': ['feeding', 'hpa'], 'S06-15': ['media', 'burnout'], 'S06-16': ['hpa'], 'S06-17': ['urti', 'hpa'],
- 'S06-19': ['emoreg', 'harvard'], 'S06-20': ['hpa'],
+ 'S06-19': ['emoreg', 'harvard'], 'S06-20': ['hpa'], 'S06-23': ['choking', 'aha2025', 'nfa'],
 }
 _refs_for = refs_for
 

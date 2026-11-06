@@ -45,7 +45,7 @@ OVERRIDE = {
     'S04-13': ['headache', 'sleep', 'eyes'], 'S04-17': ['sleep', 'emotion', 'vomit-diarrhea'], 'S05-07': ['bones', 'development'],
     'S05-15': ['bones'], 'S05-17': ['bones', 'headache'], 'S05-37': ['bones'], 'S06-01': ['daily-life'],
     'S06-04': ['development', 'daily-life'], 'S06-08': ['daily-life'], 'S06-11': ['parenting'], 'S06-15': ['parenting'],
-    'S06-06': ['emotion', 'daily-life'],
+    'S06-06': ['emotion', 'daily-life'], 'S06-23': ['daily-life', 'appetite'],
 }
 _auto = topics_for
 

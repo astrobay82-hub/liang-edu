@@ -198,6 +198,12 @@ RULES = [
         '父母的身高、媽媽初經年齡',
         '是否做過骨齡或抽血檢查，報告帶在身上',
     ]),
+    ('choking', r'哽塞|噎到', [
+        '噎到的時間、當時在吃或玩什麼（如有同樣的東西可帶來）',
+        '當下是否能咳、能哭，持續多久、是否做過拍背或推擠',
+        '異物是否確定已排出，或可能還有一部分沒找到',
+        '之後是否持續咳嗽、喘鳴、呼吸聲改變、吞嚥痛或流口水',
+    ]),
     ('growth', r'長高|身高|生長|骨齡|轉骨|跳繩|營養|維生素D|遺傳', [
         '近 1–2 年的身高體重紀錄（日期＋數值）',
         '父母的身高',
@@ -233,7 +239,7 @@ OVERRIDE = {
     'S04-01': 'sleep', 'S04-05': 'emotion', 'S04-06': 'tic', 'S04-08': 'dev', 'S04-13': 'headache', 'S04-16': 'laser', 'S04-17': 'sleep',
     'S05-02': 'posture', 'S05-03': 'posture', 'S05-07': 'posture', 'S05-09': 'pain', 'S05-12': 'growth', 'S05-15': 'posture',
     'S05-17': 'posture', 'S05-18': 'puberty', 'S05-24': 'pain', 'S05-27': 'pain', 'S05-29': 'growth', 'S05-37': 'posture', 'S05-38': 'pain',
-    'S06-08': 'fallback', 'S06-11': 'fallback', 'S06-14': 'fallback', 'S06-15': 'fallback', 'S06-16': 'fallback', 'S06-17': 'fallback',
+    'S06-08': 'fallback', 'S06-11': 'fallback', 'S06-14': 'fallback', 'S06-15': 'fallback', 'S06-16': 'fallback', 'S06-17': 'fallback', 'S06-23': 'choking',
 }
 
 
