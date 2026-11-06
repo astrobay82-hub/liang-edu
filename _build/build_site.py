@@ -321,7 +321,7 @@ for th in themes:
             visual_html = (f'<section class="block visual" id="visual"><h2><span class="tag">圖解</span>{e(vs["heading"])}</h2>'
                            f'<p class="note">{e(vs["intro"])}點圖可放大。</p>{figs}'
                            f'<a class="card vline" href="{LINE_DR}" target="_blank" rel="noopener"><span class="ic">LINE</span><div>'
-                           + (f'<b>想把整組 {vs["total"]} 張高解析圖卡存在手機？</b><p>加入雅淳醫師官方 LINE，輸入「{e(vs["line_kw"])}」即可領取（含網站上沒有的就醫備忘卡）。</p>'
+                           + (f'<b>想把整組 {vs["total"]} 張高解析圖卡存在手機？</b><p>加入雅淳醫師官方 LINE，輸入「{e(vs["line_kw"])}」即可領取（含網站上沒有的{e(vs.get("line_extra", "就醫備忘卡"))}）。</p>'
                               if vs.get('line_kw') else '<b>想收到更多圖解衛教？</b><p>加入雅淳醫師官方 LINE，掌握新圖卡、新文章與門診公告。</p>')
                            + '</div></a></section>\n')
         checks = checklist_for(t)

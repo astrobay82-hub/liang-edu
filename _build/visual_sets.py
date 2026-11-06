@@ -10,6 +10,7 @@ VISUAL_SETS = {
         'heading': '夜咳圖解重點',
         'intro': '把夜咳照護整理成 5 張圖：先看總覽，再依需要點開單張放大。',
         'line_kw': '夜咳圖卡',  # LINE 自動回應「夜咳圖卡」已於 2026-11-03 啟用（送 5 張）
+        'line_extra': '就醫備忘卡',
         'total': 5,  # LINE 自動回覆送 5 張：cards/line/yeke-1..5.jpg（課程 1-1 組，第 5 張就醫備忘卡只在 LINE）
         'cards': [
             {'n': 0, 'title': '兒童夜咳照護全指南：三步判斷與居家護理',
@@ -37,7 +38,8 @@ VISUAL_SETS = {
     'S01-04': {
         'heading': '嘴痛拒食圖解重點',
         'intro': '腸病毒、口腔潰瘍嘴巴痛的照護整理成 4 張圖。',
-        'line_kw': None,  # 待 LINE 後台設定「嘴痛圖卡」自動回應（送 cards/line/mouth-1..5.jpg）
+        'line_kw': '嘴痛圖卡',  # LINE 自動回應已於 2026-11-06 啟用（送 5 張）
+        'line_extra': '尿布脫水警訊卡',
         'total': 5,
         'cards': [
             {'n': 0, 'title': '寶寶嘴痛拒食怎麼辦？腸病毒與皰疹齒齦炎照護全攻略',
@@ -61,7 +63,8 @@ VISUAL_SETS = {
     'S02-02': {
         'heading': '嘔吐腹瀉圖解重點',
         'intro': '孩子上吐下瀉時的判斷與補水，整理成 5 張圖。',
-        'line_kw': None,  # 待 LINE 後台設定「嘔吐圖卡」自動回應（送 cards/line/vomit-1..5.jpg）
+        'line_kw': '嘔吐圖卡',  # LINE 自動回應已於 2026-11-06 啟用（送 5 張）
+        'line_extra': '就醫觀察紀錄卡',
         'total': 5,
         'cards': [
             {'n': 0, 'title': '孩子半夜嘔吐腹瀉？應急處置與就醫指南',
@@ -89,7 +92,8 @@ VISUAL_SETS = {
     'S03-01': {
         'heading': '夜間抓癢圖解重點',
         'intro': '孩子半夜抓不停時的分型與照護，整理成 4 張圖。',
-        'line_kw': None,  # 待 LINE 後台設定「抓癢圖卡」自動回應（送 cards/line/itch-1..5.jpg）
+        'line_kw': '抓癢圖卡',  # LINE 自動回應已於 2026-11-06 啟用（送 5 張）
+        'line_extra': '體質調護卡',
         'total': 5,
         'cards': [
             {'n': 0, 'title': '孩子半夜抓癢抓不停？床邊快速辨識兩大類型',
@@ -113,7 +117,8 @@ VISUAL_SETS = {
     'S04-04': {
         'heading': '情緒崩潰圖解重點',
         'intro': '孩子情緒爆炸時的應對與收尾，整理成 4 張圖。',
-        'line_kw': None,  # 待 LINE 後台設定「情緒圖卡」自動回應（送 cards/line/mood-1..5.jpg）
+        'line_kw': '情緒圖卡',  # LINE 自動回應已於 2026-11-06 啟用（送 5 張）
+        'line_extra': '風暴後順氣卡',
         'total': 5,
         'cards': [
             {'n': 0, 'title': '孩子崩潰的關鍵 90 秒',
