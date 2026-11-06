@@ -334,3 +334,7 @@ footer.site .cols{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
 .vline b{display:block;font-size:15.5px;color:var(--ink)}
 .vline p{margin:2px 0 0;font-size:14px;color:var(--muted);line-height:1.6}
 @media print{.vline{display:none!important}}
+.visual h3{font-family:var(--serif);font-size:18px;color:var(--ink);margin:22px 0 6px}
+.vgrid{display:grid;grid-template-columns:1fr;gap:0 16px}
+.vgrid .vcard img{aspect-ratio:1080/1350}
+@media(min-width:640px){.vgrid{grid-template-columns:1fr 1fr}}
