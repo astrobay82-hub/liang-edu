@@ -29,4 +29,12 @@ ICONS = {
     # 自理與生活能力：微笑小書包
     'S06': '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M24 14v-3a8 8 0 0 1 16 0v3" fill="none" stroke="#7E5C93" stroke-width="2.6"/><rect x="12" y="14" width="40" height="44" rx="12" fill="#f3e9f8" stroke="#7E5C93" stroke-width="2.6"/><path d="M12 30h40" stroke="#7E5C93" stroke-width="2.2"/>'
            + '<rect x="22" y="40" width="20" height="13" rx="5" fill="#e3cdee" stroke="#7E5C93" stroke-width="2"/>' + face(32, 23, 7) + '</svg>',
+    # 婦科與女性健康：微笑小花＋月亮
+    'S07': '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 46v12" stroke="#5F8F6A" stroke-width="2.6" stroke-linecap="round"/><path d="M32 54c-6 0-9-4-9-7 5 0 9 3 9 7zM32 52c5 0 8-3 8-6-4 0-8 2-8 6z" fill="#cfe8d4" stroke="#5F8F6A" stroke-width="2" stroke-linejoin="round"/>'
+           + ''.join(f'<circle cx="{32 + 11 * c}" cy="{28 + 11 * s}" r="9" fill="#fde2da" stroke="#B5604A" stroke-width="2.2"/>' for c, s in ((1, 0), (0.31, 0.95), (-0.81, 0.59), (-0.81, -0.59), (0.31, -0.95)))
+           + '<circle cx="32" cy="28" r="10" fill="#fff4ef" stroke="#B5604A" stroke-width="2.4"/>' + face(32, 27, 4.5)
+           + '<path d="M55 6a6 6 0 1 0 4 10 7 7 0 0 1-4-10z" fill="#f6c453"/></svg>',
+    # 成人內科：微笑愛心＋心電圖
+    'S08': '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54C18 45 8 36 8 25c0-7 5-12 11-12 5 0 9 3 13 8 4-5 8-8 13-8 6 0 11 5 11 12 0 11-10 20-24 29z" fill="#e3eef7" stroke="#3E6E96" stroke-width="2.6" stroke-linejoin="round"/>'
+           + face(32, 30, 8) + '<path d="M4 46h12l4-6 5 12 4-8h31" stroke="#7fb0d6" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 }

@@ -26,6 +26,12 @@ TOPICS = [
     ('women', '孕期與產後', r'孕|產後|害喜|妊娠|剖腹|坐月子|月經|經前|媽媽手', '孕吐、產後掉髮與情緒、骨盆與漏尿、經前不適的中西醫照護。'),
     ('daily-life', '生活自理與習慣', r'出門|不盯|穿衣|玩具|自理|國中|節氣|換季衣服|小藥箱|中藥粉|身體訊號', '早上出門、收玩具、穿衣、餵藥：培養孩子自理能力的小步驟。'),
     ('parenting', '家長照顧與親子關係', r'照顧生病|愧疚|隊友|阿公阿嬤|查症狀|診間|二寶|大寶', '照顧者也需要被照顧：家長情緒、分工、隔代教養與看診準備。'),
+    ('gyn', '月經與婦科', r'(?!x)x', '月經不規則、經痛、經血過多、PCOS、陰道與泌尿感染、子宮頸篩檢與備孕的中西醫照護。'),
+    ('menopause', '更年期與停經後', r'(?!x)x', '熱潮紅盜汗、陰道乾澀頻尿、停經後出血與骨質保健。'),
+    ('digestive', '成人腸胃', r'(?!x)x', '胃食道逆流、消化不良、幽門螺旋桿菌、腸躁症與便祕：何時就醫、怎麼調整。'),
+    ('metabolic', '三高與代謝', r'(?!x)x', '血壓、血糖、膽固醇、脂肪肝、痛風、甲狀腺與骨質疏鬆的居家追蹤與調理。'),
+    ('adult-neuro', '成人睡眠與頭痛頭暈', r'(?!x)x', '慢性失眠、偏頭痛與緊張型頭痛、眩暈與耳石症的分辨與就醫警訊。'),
+    ('internal', '常見內科症狀', r'(?!x)x', '貧血、心悸、久咳與帶狀皰疹等成人常見問題。'),
 ]
 SLUG_NAME = {s: n for s, n, _, _ in TOPICS}
 
@@ -39,13 +45,23 @@ def topics_for(t, limit=3):
     return hits[:limit]
 
 OVERRIDE = {
-    'S01-12': ['cough-asthma', 'cold-fever'], 'S01-18': ['women', 'cold-fever', 'cough-asthma'], 'S01-26': ['nasal-allergy', 'skin'],
-    'S02-15': ['bedwetting'], 'S02-18': ['women', 'reflux', 'constipation'], 'S02-19': ['women', 'bedwetting', 'constipation'],
+    'S01-12': ['cough-asthma', 'cold-fever'], 'S01-26': ['nasal-allergy', 'skin'],
+    'S02-15': ['bedwetting'], 
     'S03-05': ['wounds'], 'S03-07': ['wounds'], 'S04-06': ['development'], 'S04-08': ['development'], 'S04-11': ['cold-fever'],
     'S04-13': ['headache', 'sleep', 'eyes'], 'S04-17': ['sleep', 'emotion', 'vomit-diarrhea'], 'S05-07': ['bones', 'development'],
     'S05-15': ['bones'], 'S05-17': ['bones', 'headache'], 'S05-37': ['bones'], 'S06-01': ['daily-life'],
     'S06-04': ['development', 'daily-life'], 'S06-08': ['daily-life'], 'S06-11': ['parenting'], 'S06-15': ['parenting'],
     'S06-06': ['emotion', 'daily-life'], 'S06-23': ['daily-life', 'appetite'],
+    'S07-01': ['gyn', 'puberty'], 'S07-02': ['gyn'], 'S07-03': ['gyn', 'women'], 'S07-04': ['gyn'], 'S07-05': ['gyn', 'metabolic'],
+    'S07-06': ['gyn'], 'S07-07': ['gyn'], 'S07-08': ['gyn'], 'S07-09': ['gyn'], 'S07-10': ['gyn', 'women'],
+    'S07-11': ['women', 'reflux', 'constipation'], 'S07-12': ['women', 'cold-fever', 'cough-asthma'], 'S07-13': ['women', 'skin'],
+    'S07-14': ['women', 'bedwetting', 'constipation'], 'S07-15': ['women', 'bones'], 'S07-16': ['women', 'sleep'], 'S07-17': ['women'],
+    'S07-18': ['menopause'], 'S07-19': ['menopause', 'gyn'], 'S07-20': ['menopause', 'gyn'],
+    'S08-01': ['digestive', 'reflux'], 'S08-02': ['digestive'], 'S08-03': ['digestive'], 'S08-04': ['digestive'], 'S08-05': ['digestive'],
+    'S08-06': ['metabolic'], 'S08-07': ['metabolic'], 'S08-08': ['metabolic'], 'S08-09': ['metabolic'], 'S08-10': ['metabolic'],
+    'S08-11': ['metabolic'], 'S08-12': ['metabolic'], 'S08-13': ['metabolic', 'menopause'], 'S08-14': ['adult-neuro'],
+    'S08-15': ['adult-neuro'], 'S08-16': ['adult-neuro'], 'S08-17': ['internal'], 'S08-18': ['internal'], 'S08-19': ['internal'],
+    'S08-20': ['internal'],
 }
 _auto = topics_for
 

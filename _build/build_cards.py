@@ -8,7 +8,7 @@ ROOT = os.path.dirname(HERE)
 OUT = os.path.join(ROOT, 'cards')
 jobs = json.load(open(os.path.join(HERE, 'card_jobs.json')))
 only = set(sys.argv[1:])
-COL = {'teal': '#3F7F7A', 'amber': '#B8862F', 'rose': '#B85F6E', 'indigo': '#5B5F9E', 'emerald': '#3A6356', 'purple': '#7E5C93'}
+COL = {'teal': '#3F7F7A', 'amber': '#B8862F', 'rose': '#B85F6E', 'indigo': '#5B5F9E', 'emerald': '#3A6356', 'purple': '#7E5C93', 'coral': '#B5604A', 'sky': '#3E6E96'}
 e = lambda s: html.escape(str(s))
 import base64, re
 AV = 'data:image/webp;base64,' + base64.b64encode(open(os.path.join(ROOT, 'assets', 'avatar.webp'),'rb').read()).decode()

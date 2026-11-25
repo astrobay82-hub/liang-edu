@@ -17,7 +17,11 @@ UPDATED = '2026-10-30'
 LINE_BOT = 'https://lin.ee/P1qhxUq'
 LINE_DR = 'https://lin.ee/WiNimzB'
 REG = 'https://reg-prod.tzuchi-healthcare.org.tw/tchw/HIS5OpdReg/DtQuery?Loc=TC&Doc=30226'
-SYS_COLOR = {'teal': 'c-teal', 'amber': 'c-amber', 'rose': 'c-rose', 'indigo': 'c-indigo', 'emerald': 'c-emerald', 'purple': 'c-purple'}
+SYS_COLOR = {'teal': 'c-teal', 'amber': 'c-amber', 'rose': 'c-rose', 'indigo': 'c-indigo', 'emerald': 'c-emerald', 'purple': 'c-purple', 'coral': 'c-coral', 'sky': 'c-sky'}
+# 成人系統（婦科、內科）：急診提醒與受眾用成人版
+ADULT_SYS = ('S07', 'S08')
+ER_CHILD = '若出現呼吸困難、意識不清、抽搐不止、持續高燒或精神活動力明顯變差，請直接就醫或撥打 119。'
+ER_ADULT = '若出現胸痛、呼吸困難、意識不清、昏厥、大量出血，或突然單側無力、說話不清，請直接就醫或撥打 119。'
 
 themes = json.load(open(os.path.join(HERE, 'themes_final.json')))
 for _th in themes:
@@ -267,6 +271,22 @@ CLUSTERS = [
     ['S04-26', 'S05-30', 'S05-05'],
     ['S02-05', 'S02-26', 'S02-08', 'S02-06', 'S06-07'],
     ['S06-23', 'S06-18', 'S04-11', 'S06-07'],
+    # 婦科與女性健康
+    ['S07-01', 'S07-05', 'S07-02', 'S05-18'],
+    ['S07-02', 'S07-03', 'S07-06', 'S07-18'],
+    ['S07-04', 'S07-06', 'S08-17', 'S07-20'],
+    ['S07-07', 'S07-08', 'S07-19', 'S07-09'],
+    ['S07-10', 'S07-05', 'S07-11', 'S08-11'],
+    ['S07-11', 'S07-12', 'S07-13', 'S07-10'],
+    ['S07-14', 'S07-15', 'S07-16', 'S07-17'],
+    ['S07-18', 'S07-19', 'S07-20', 'S08-13', 'S08-14'],
+    # 成人內科
+    ['S08-01', 'S08-02', 'S08-03', 'S08-04'],
+    ['S08-04', 'S08-05', 'S08-02'],
+    ['S08-06', 'S08-07', 'S08-08', 'S08-09', 'S08-10'],
+    ['S08-11', 'S08-12', 'S08-17', 'S08-18'],
+    ['S08-14', 'S08-15', 'S08-16', 'S07-03'],
+    ['S08-20', 'S08-13', 'S08-19'],
 ]
 all_topics = []
 for th in themes:
@@ -345,7 +365,7 @@ for th in themes:
             {'@type': 'MedicalWebPage', 'headline': t['title'], 'description': desc, 'url': SITE + path, 'inLanguage': 'zh-Hant-TW',
              'image': SITE + card_src, 'datePublished': UPDATED, 'dateModified': UPDATED, 'author': DR_PERSON,
              'publisher': {'@type': 'Organization', 'name': '梁雅淳醫師婦兒中醫衛教專欄', 'logo': SITE + '/assets/apple-touch-icon.png'},
-             'about': t['tag'], 'audience': {'@type': 'PeopleAudience', 'audienceType': '家長'},
+             'about': t['tag'], 'audience': {'@type': 'PeopleAudience', 'audienceType': '成人' if th['id'] in ADULT_SYS else '家長'},
              'citation': [r['text'] for r in refs]},
             {'@type': 'BreadcrumbList', 'itemListElement': [
                 {'@type': 'ListItem', 'position': 1, 'name': '首頁', 'item': SITE + '/'},
@@ -369,7 +389,7 @@ for th in themes:
 <section class="block" id="quick"><h2><span class="tag">3 分鐘</span>重點速讀</h2><div class="prose">{prose(t['ext_reading_500'])}</div></section>
 {visual_html}<section class="block" id="detail"><h2><span class="tag">深入</span>詳細衛教</h2>{secs}</section>
 <section class="block" id="tcm"><h2><span class="tag">中醫</span>中醫怎麼看</h2><div class="tcm"><dl><dt>相關臟腑</dt><dd>{e(t['tcm_organ'])}</dd><dt>常見證型</dt><dd>{e(t['pattern'])}</dd></dl><div class="prose">{prose(t['tcm_view'])}</div></div></section>
-<section class="block" id="flag"><div class="flag"><h2>何時應該就醫評估？</h2>{flag_html}<p class="er">若出現呼吸困難、意識不清、抽搐不止、持續高燒或精神活動力明顯變差，請直接就醫或撥打 119。</p></div></section>
+<section class="block" id="flag"><div class="flag"><h2>何時應該就醫評估？</h2>{flag_html}<p class="er">{ER_ADULT if th['id'] in ADULT_SYS else ER_CHILD}</p></div></section>
 <section class="block infocard" id="card"><h2><span class="tag">可存圖</span>衛教圖卡</h2>
   <img src="{card_view}" width="1080" height="1350" alt="{e(t['title'])}衛教圖卡" loading="lazy">
   <div class="row"><a class="btn pri" href="{card_src}" download="{tid}-{e(t['title'][:16])}.jpg">{ICON['image']}<span>下載圖卡</span></a><a class="btn" href="https://social-plugins.line.me/lineit/share?url={SITE}{path}" target="_blank" rel="noopener">分享到 LINE</a></div>
@@ -409,9 +429,9 @@ home_body = f'''<div class="wrap">
 <section class="hero">
   <p class="eyebrow">婦兒中醫衛教專欄・{total} 篇</p>
   <h1>台中中醫兒科衛教：孩子過敏、腸胃、睡眠與長高照護</h1>
-  <p class="lead"><b>孩子不舒服的時候，先在這裡找到方向。</b>整理國際兒科指引與研究重點，加上中醫兒科的臨床觀點：今晚在家能做什麼、什麼情況要就醫，一篇看懂。</p>
+  <p class="lead"><b>孩子不舒服的時候，先在這裡找到方向。</b>整理國際兒科指引與研究重點，加上中醫兒科的臨床觀點：今晚在家能做什麼、什麼情況要就醫，一篇看懂。也收錄媽媽與家人需要的<a href="/#S07">婦科</a>與<a href="/#S08">內科</a>衛教。</p>
   <div class="search" id="search"><label class="sr" for="q">搜尋衛教文章</label>{ICON['search']}<input id="q" type="search" placeholder="輸入症狀，例如：鼻塞、便秘、長高" autocomplete="off" enterkeyhint="search"></div>
-  <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button></div>
+  <div class="quick" aria-label="熱門搜尋"><button type="button">鼻過敏</button><button type="button">咳嗽</button><button type="button">發燒</button><button type="button">便秘</button><button type="button">長高</button><button type="button">睡眠</button><button type="button">ADHD</button><button type="button">產後</button><button type="button">月經</button><button type="button">更年期</button><button type="button">失眠</button></div>
   <a class="card doc-mini" href="/doctor" style="color:inherit;text-decoration:none"><img src="/assets/avatar.webp?v={V_AV}" width="56" height="56" alt=""><div><b>梁雅淳 醫師</b><p>台中慈濟醫院中醫兒科主任｜過敏免疫・兒童生長・脊椎側彎</p></div><span class="btn go">醫師介紹</span></a>
   <a class="card bp-promo" href="/growth"><span class="ic">🌱</span><div><b>雅淳醫師成長手帳（免費試用）</b><p>依孩子年齡看發展觀察重點、記錄生活與身高體重，回診前一鍵整理摘要。</p></div></a>
 </section>

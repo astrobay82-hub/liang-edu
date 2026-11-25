@@ -89,12 +89,67 @@ add('osgood', 'Ladenhauf HN, et al. Osgood-Schlatter disease: a 2020 update of a
 add('pulled', 'Krul M, et al. Manipulative interventions for reducing pulled elbow in young children. Cochrane Database Syst Rev. 2017;7:CD007759.', 'Manipulative interventions for reducing pulled elbow in young children')
 add('torti', 'Kaplan SL, et al. Physical therapy management of congenital muscular torticollis: a 2018 evidence-based clinical practice guideline from the APTA Academy of Pediatric Physical Therapy. Pediatr Phys Ther. 2018;30(4):240-290.', 'Physical Therapy Management of Congenital Muscular Torticollis: A 2018 Evidence-Based Clinical Practice Guideline From the APTA Academy of Pediatric Physical Therapy')
 add('soy', 'Messina M. Soy and health update: evaluation of the clinical and epidemiologic literature. Nutrients. 2016;8(12):754.', 'Soy and Health Update: Evaluation of the Clinical and Epidemiologic Literature')
+# ---- 婦科與女性健康（S07）----
+add('acog_adol', 'ACOG Committee Opinion No. 651: Menstruation in girls and adolescents: using the menstrual cycle as a vital sign. Obstet Gynecol. 2015;126(6):e143-e146.', 'ACOG Committee Opinion No. 651: Menstruation in Girls and Adolescents: Using the Menstrual Cycle as a Vital Sign')
+add('acog_hmb', 'American College of Obstetricians and Gynecologists（ACOG）：Heavy Menstrual Bleeding 病人衛教頁。', url='https://www.acog.org/womens-health/faqs/heavy-menstrual-bleeding')
+add('nice_hmb', 'NICE guideline NG88: Heavy menstrual bleeding: assessment and management. 2018（現行版）.', url='https://www.nice.org.uk/guidance/ng88')
+add('dysmen', 'ACOG Committee Opinion No. 760: Dysmenorrhea and endometriosis in the adolescent. Obstet Gynecol. 2018;132(6):e249-e258.', 'ACOG Committee Opinion No. 760: Dysmenorrhea and Endometriosis in the Adolescent')
+add('nice_endo', 'NICE guideline NG73: Endometriosis: diagnosis and management. 2017（2024 更新）.', url='https://www.nice.org.uk/guidance/ng73')
+add('eshre_endo', 'Becker CM, et al. ESHRE guideline: endometriosis. Hum Reprod Open. 2022;2022(2):hoac009.', 'ESHRE guideline: endometriosis')
+add('pcos2023', 'Teede HJ, et al. Recommendations from the 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome. J Clin Endocrinol Metab. 2023;108(10):2447-2469.', 'Recommendations From the 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome')
+add('pcos_acu', 'Lim CED, et al. Acupuncture for polycystic ovarian syndrome. Cochrane Database Syst Rev（系統性回顧，最新版）.', 'Acupuncture for polycystic ovarian syndrome')
+add('fibroid', 'ACOG Practice Bulletin No. 228: Management of symptomatic uterine leiomyomas. Obstet Gynecol. 2021;137(6):e100-e115.', 'Management of Symptomatic Uterine Leiomyomas: ACOG Practice Bulletin, Number 228')
+add('vagin', 'ACOG Practice Bulletin No. 215: Vaginitis in nonpregnant patients. Obstet Gynecol. 2020;135(1):e1-e17.', 'Vaginitis in Nonpregnant Patients: ACOG Practice Bulletin, Number 215')
+add('sti', 'Workowski KA, et al. Sexually transmitted infections treatment guidelines, 2021. MMWR Recomm Rep. 2021;70(4):1-187.', 'Sexually Transmitted Infections Treatment Guidelines, 2021')
+add('rutiaua', 'Anger J, et al. Recurrent uncomplicated urinary tract infections in women: AUA/CUA/SUFU guideline. J Urol. 2019;202(2):282-289.', 'Recurrent Uncomplicated Urinary Tract Infections in Women: AUA/CUA/SUFU Guideline')
+add('cranberry', 'Williams G, et al. Cranberries for preventing urinary tract infections. Cochrane Database Syst Rev. 2023;11:CD001321.', 'Cranberries for preventing urinary tract infections')
+add('hpa_adult', '衛生福利部國民健康署：成人預防保健、孕前健康檢查與癌症篩檢（子宮頸癌、乳癌、大腸癌、胃幽門螺旋桿菌）資訊。', url='https://www.hpa.gov.tw/')
+add('who_cervix', 'World Health Organization. WHO guideline for screening and treatment of cervical pre-cancer lesions for cervical cancer prevention, 2nd ed. 2021.', url='https://www.who.int/')
+add('folic', 'US Preventive Services Task Force. Folic acid supplementation to prevent neural tube defects: USPSTF reaffirmation recommendation statement. JAMA. 2023;330(5):454-459.', 'Folic Acid Supplementation to Prevent Neural Tube Defects: US Preventive Services Task Force Reaffirmation Recommendation Statement')
+add('infert', 'Practice Committee of the American Society for Reproductive Medicine. Fertility evaluation of infertile women: a committee opinion. Fertil Steril. 2021;116(5):1255-1265.', 'Fertility evaluation of infertile women: a committee opinion')
+add('abm36', 'Mitchell KB, et al. Academy of Breastfeeding Medicine Clinical Protocol #36: The mastitis spectrum, revised 2022. Breastfeed Med. 2022;17(5):360-376.', 'Academy of Breastfeeding Medicine Clinical Protocol #36: The Mastitis Spectrum, Revised 2022')
+add('nice_meno', 'NICE guideline NG23: Menopause: identification and management. 2015（2024 更新）.', url='https://www.nice.org.uk/guidance/ng23')
+add('nams_ht', 'The 2022 hormone therapy position statement of The North American Menopause Society. Menopause. 2022;29(7):767-794.', 'The 2022 hormone therapy position statement of The North American Menopause Society')
+add('nams_gsm', 'The 2020 genitourinary syndrome of menopause position statement of The North American Menopause Society. Menopause. 2020;27(9):976-992.', 'The 2020 genitourinary syndrome of menopause position statement of The North American Menopause Society')
+add('acog_pmb', 'ACOG Committee Opinion No. 734: The role of transvaginal ultrasonography in evaluating the endometrium of women with postmenopausal bleeding. Obstet Gynecol. 2018;131(5):e124-e129.', 'ACOG Committee Opinion No. 734: The Role of Transvaginal Ultrasonography in Evaluating the Endometrium of Women With Postmenopausal Bleeding')
+# ---- 成人內科（S08）----
+add('acg_gerd', 'Katz PO, et al. ACG clinical guideline for the diagnosis and management of gastroesophageal reflux disease. Am J Gastroenterol. 2022;117(1):27-56.', 'ACG Clinical Guideline for the Diagnosis and Management of Gastroesophageal Reflux Disease')
+add('dyspepsia', 'Moayyedi PM, et al. ACG and CAG clinical guideline: management of dyspepsia. Am J Gastroenterol. 2017;112(7):988-1013.', 'ACG and CAG Clinical Guideline: Management of Dyspepsia')
+add('maastricht', 'Malfertheiner P, et al. Management of Helicobacter pylori infection: the Maastricht VI/Florence consensus report. Gut. 2022;71(9):1724-1762.', 'Management of Helicobacter pylori infection: the Maastricht VI/Florence consensus report')
+add('hp_taipei', 'Liou JM, et al. Screening and eradication of Helicobacter pylori for gastric cancer prevention: the Taipei global consensus. Gut. 2020;69(12):2093-2112.', 'Screening and eradication of Helicobacter pylori for gastric cancer prevention: the Taipei global consensus')
+add('ibs', 'Lacy BE, et al. ACG clinical guideline: management of irritable bowel syndrome. Am J Gastroenterol. 2021;116(1):17-44.', 'ACG Clinical Guideline: Management of Irritable Bowel Syndrome')
+add('constip_adult', 'Chang L, et al. AGA-ACG clinical practice guideline: pharmacological management of chronic idiopathic constipation. Gastroenterology. 2023;164(7):1086-1106.', 'American Gastroenterological Association-American College of Gastroenterology Clinical Practice Guideline: Pharmacological Management of Chronic Idiopathic Constipation')
+add('tw_htn', 'Wang TD, et al. 2022 Guidelines of the Taiwan Society of Cardiology and the Taiwan Hypertension Society for the management of hypertension. Acta Cardiol Sin. 2022;38(3):225-325.', '2022 Guidelines of the Taiwan Society of Cardiology and the Taiwan Hypertension Society for the Management of Hypertension')
+add('ada', 'American Diabetes Association. Standards of Care in Diabetes（每年更新）.', url='https://diabetes.org/')
+add('dpp', 'Knowler WC, et al. Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin. N Engl J Med. 2002;346(6):393-403.', 'Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin')
+add('lipid', 'Grundy SM, et al. 2018 AHA/ACC multisociety guideline on the management of blood cholesterol. J Am Coll Cardiol. 2019;73(24):e285-e350.', '2018 AHA/ACC/AACVPR/AAPA/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Blood Cholesterol')
+add('masld', 'Rinella ME, et al. A multisociety Delphi consensus statement on new fatty liver disease nomenclature. Hepatology. 2023;78(6):1966-1986.', 'A multisociety Delphi consensus statement on new fatty liver disease nomenclature')
+add('easl_masld', 'EASL-EASD-EASO clinical practice guidelines on the management of metabolic dysfunction-associated steatotic liver disease (MASLD). J Hepatol. 2024;81(3):492-542.', 'EASL-EASD-EASO Clinical Practice Guidelines on the management of metabolic dysfunction-associated steatotic liver disease (MASLD)')
+add('gout', 'FitzGerald JD, et al. 2020 American College of Rheumatology guideline for the management of gout. Arthritis Care Res. 2020;72(6):744-760.', '2020 American College of Rheumatology Guideline for the Management of Gout')
+add('hypothy', 'Jonklaas J, et al. Guidelines for the treatment of hypothyroidism: prepared by the American Thyroid Association task force on thyroid hormone replacement. Thyroid. 2014;24(12):1670-1751.', 'Guidelines for the treatment of hypothyroidism: prepared by the american thyroid association task force on thyroid hormone replacement')
+add('ata', 'American Thyroid Association：甲狀腺功能低下、亢進與甲狀腺檢驗病人衛教。', url='https://www.thyroid.org/')
+add('hyperthy', 'Ross DS, et al. 2016 American Thyroid Association guidelines for diagnosis and management of hyperthyroidism and other causes of thyrotoxicosis. Thyroid. 2016;26(10):1343-1421.', '2016 American Thyroid Association Guidelines for Diagnosis and Management of Hyperthyroidism and Other Causes of Thyrotoxicosis')
+add('osteo', 'Eastell R, et al. Pharmacological management of osteoporosis in postmenopausal women: an Endocrine Society clinical practice guideline. J Clin Endocrinol Metab. 2019;104(5):1595-1622.', 'Pharmacological Management of Osteoporosis in Postmenopausal Women: An Endocrine Society Clinical Practice Guideline')
+add('acp_insomnia', 'Qaseem A, et al. Management of chronic insomnia disorder in adults: a clinical practice guideline from the American College of Physicians. Ann Intern Med. 2016;165(2):125-133.', 'Management of Chronic Insomnia Disorder in Adults: A Clinical Practice Guideline From the American College of Physicians')
+add('aasm_cbti', 'Edinger JD, et al. Behavioral and psychological treatments for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline. J Clin Sleep Med. 2021;17(2):255-262.', 'Behavioral and psychological treatments for chronic insomnia disorder in adults: an American Academy of Sleep Medicine clinical practice guideline')
+add('ichd3', 'Headache Classification Committee of the International Headache Society. The International Classification of Headache Disorders, 3rd edition. Cephalalgia. 2018;38(1):1-211.', 'Headache Classification Committee of the International Headache Society (IHS) The International Classification of Headache Disorders, 3rd edition')
+add('acu_migraine', 'Linde K, et al. Acupuncture for the prevention of episodic migraine. Cochrane Database Syst Rev. 2016;6:CD001218.', 'Acupuncture for the prevention of episodic migraine')
+add('bppv', 'Bhattacharyya N, et al. Clinical practice guideline: benign paroxysmal positional vertigo (update). Otolaryngol Head Neck Surg. 2017;156(3_suppl):S1-S47.', 'Clinical Practice Guideline: Benign Paroxysmal Positional Vertigo (Update)')
+add('bsg_ida', 'Snook J, et al. British Society of Gastroenterology guidelines for the management of iron deficiency anaemia in adults. Gut. 2021;70(11):2030-2051.', 'British Society of Gastroenterology guidelines for the management of iron deficiency anaemia in adults')
+add('palp', 'Raviele A, et al. Management of patients with palpitations: a position paper from the European Heart Rhythm Association. Europace. 2011;13(7):920-934.', 'Management of patients with palpitations: a position paper from the European Heart Rhythm Association')
+add('af', 'Joglar JA, et al. 2023 ACC/AHA/ACCP/HRS guideline for the diagnosis and management of atrial fibrillation. Circulation. 2024;149(1):e1-e156.', '2023 ACC/AHA/ACCP/HRS Guideline for the Diagnosis and Management of Atrial Fibrillation')
+add('cough', 'Morice AH, et al. ERS guidelines on the diagnosis and treatment of chronic cough in adults and children. Eur Respir J. 2020;55(1):1901136.', 'ERS guidelines on the diagnosis and treatment of chronic cough in adults and children')
+add('zoster', 'Cohen JI. Clinical practice: herpes zoster. N Engl J Med. 2013;369(3):255-263.', 'Clinical practice: Herpes zoster')
+add('rzv', 'Anderson TC, et al. Use of recombinant zoster vaccine in immunocompromised adults aged ≥19 years: recommendations of the ACIP — United States, 2022. MMWR. 2022;71(3):80-84.', 'Use of Recombinant Zoster Vaccine in Immunocompromised Adults Aged ≥19 Years: Recommendations of the Advisory Committee on Immunization Practices - United States, 2022')
 # ---- 中醫典籍與教材 ----
 add('qianyi', '［宋］錢乙《小兒藥證直訣》：論小兒「臟腑柔弱，易虛易實，易寒易熱」的生理病理特點。')
 add('wanquan', '［明］萬全《育嬰家秘》：小兒「肝常有餘，脾常不足」等五臟有餘不足之說。')
 add('tcmped', '汪受傳主編《中醫兒科學》（全國中醫藥行業高等教育規劃教材），中國中醫藥出版社。')
 add('fuqingzhu', '［清］傅山《傅青主女科》：婦人經、帶、胎、產病證論治。')
 add('neijing', '《黃帝內經・素問》：四氣調神、陰陽與臟腑理論。')
+add('fuke', '《中醫婦科學》（全國中醫藥行業高等教育規劃教材），中國中醫藥出版社。')
+add('neike', '《中醫內科學》（全國中醫藥行業高等教育規劃教材），中國中醫藥出版社。')
+add('piwei', '［金］李東垣《脾胃論》：脾胃為氣血生化之源，內傷脾胃，百病由生。')
 
 RULES = [
     (r'發燒|燒退|退燒', ['fever']),
@@ -168,6 +223,7 @@ RULES = [
 FALLBACK = {
     'S01': ['urti', 'hpa'], 'S02': ['rome_child', 'feeding'], 'S03': ['ad', 'fda'],
     'S04': ['sleepdur', 'devscreen'], 'S05': ['shortstat', 'hpa'], 'S06': ['harvard', 'hpa'],
+    'S07': ['hpa_adult'], 'S08': ['hpa_adult'],
 }
 WOMEN = re.compile(r'孕|產後|產|媽媽|月經|經前|初經|妊娠|剖腹')
 
@@ -186,16 +242,24 @@ def refs_for(t):
         if r not in ids:
             ids.append(r)
     ids = ids[:5]
-    tcm = ['fuqingzhu', 'neijing'] if WOMEN.search(t['title'] + t['tag']) else ['tcmped', 'wanquan' if t['id'][:3] in ('S02', 'S05', 'S06') else 'qianyi']
+    sid = t['id'][:3]
+    if sid == 'S07':
+        tcm = ['fuqingzhu', 'fuke', 'neijing']
+    elif sid == 'S08':
+        tcm = ['piwei', 'neike'] if t['id'] <= 'S08-05' else ['neike', 'neijing']
+    elif WOMEN.search(t['title'] + t['tag']):
+        tcm = ['fuqingzhu', 'neijing']
+    else:
+        tcm = ['tcmped', 'wanquan' if sid in ('S02', 'S05', 'S06') else 'qianyi']
     return [R[i] for i in ids], [R[i] for i in tcm]
 
 OVERRIDE = {
  'S01-01': ['urti', 'icar', 'saline'], 'S01-05': ['fever', 'urti'], 'S01-07': ['gina'], 'S01-10': ['myopia', 'hpa'],
- 'S01-12': ['croup', 'fever'], 'S01-13': ['sinus', 'wetcough', 'gerd'], 'S01-18': ['urti', 'honey', 'fda'],
+ 'S01-12': ['croup', 'fever'], 'S01-13': ['sinus', 'wetcough', 'gerd'], 
  'S02-01': ['gerd', 'rome_infant'], 'S02-02': ['age'], 'S02-10': ['age', 'constip'], 'S02-12': ['rome_infant', 'cmpa'],
  'S02-15': ['uti'], 'S02-16': ['feeding', 'shortstat'], 'S02-17': ['rome_child', 'constip'], 'S02-35': ['gerd', 'tic'],
  'S03-04': ['urtic', 'fda'], 'S03-05': ['fda'], 'S03-09': ['fda'], 'S03-10': ['ad', 'emoll'], 'S03-11': ['ad', 'emoll'],
- 'S03-13': ['ad', 'emoll'], 'S03-17': ['emoll'], 'S03-18': ['fda'], 'S03-19': ['fda'], 'S03-20': ['icp'],
+ 'S03-13': ['ad', 'emoll'], 'S03-17': ['emoll'], 'S03-18': ['fda'], 'S03-19': ['fda'],
  'S04-01': ['sleepdur', 'media'], 'S04-02': ['sleepdur'], 'S04-05': ['rome_child', 'emoreg'], 'S04-06': ['tic'],
  'S04-12': ['sleepdur', 'vitd'], 'S04-13': ['headache', 'sleepdur', 'myopia', 'sinus'], 'S04-16': ['devscreen', 'enuresis'],
  'S04-17': ['sleepdur', 'rome_child'], 'S05-01': ['devscreen', 'sensory'], 'S05-02': ['scoli', 'media'], 'S05-06': ['scoli'],
@@ -204,6 +268,15 @@ OVERRIDE = {
  'S06-06': ['emoreg', 'devscreen'], 'S06-07': ['feeding', 'responsive'], 'S06-11': ['burnout', 'sleepdur', 'fever'],
  'S06-13': ['feeding', 'hpa'], 'S06-15': ['media', 'burnout'], 'S06-16': ['hpa'], 'S06-17': ['urti', 'hpa'],
  'S06-19': ['emoreg', 'harvard'], 'S06-20': ['hpa'], 'S06-23': ['choking', 'aha2025', 'nfa'],
+ 'S07-01': ['acog_adol', 'acog_hmb'], 'S07-02': ['dysmen', 'nice_endo', 'eshre_endo'], 'S07-03': ['pmd'], 'S07-04': ['nice_hmb', 'acog_hmb'],
+ 'S07-05': ['pcos2023', 'pcos_acu'], 'S07-06': ['fibroid', 'acog_hmb'], 'S07-07': ['vagin', 'sti'], 'S07-08': ['rutiaua', 'cranberry'],
+ 'S07-09': ['hpa_adult', 'who_cervix'], 'S07-10': ['folic', 'infert', 'hpa_adult'], 'S07-12': ['urti', 'honey', 'fda'], 'S07-13': ['icp'],
+ 'S07-17': ['abm36'], 'S07-18': ['nice_meno', 'nams_ht'], 'S07-19': ['nams_gsm'], 'S07-20': ['acog_pmb'],
+ 'S08-01': ['acg_gerd'], 'S08-02': ['dyspepsia', 'maastricht'], 'S08-03': ['maastricht', 'hp_taipei', 'hpa_adult'], 'S08-04': ['ibs'],
+ 'S08-05': ['constip_adult'], 'S08-06': ['tw_htn'], 'S08-07': ['ada', 'dpp'], 'S08-08': ['lipid'], 'S08-09': ['masld', 'easl_masld'],
+ 'S08-10': ['gout'], 'S08-11': ['hypothy', 'ata'], 'S08-12': ['hyperthy'], 'S08-13': ['osteo'], 'S08-14': ['acp_insomnia', 'aasm_cbti'],
+ 'S08-15': ['ichd3', 'acu_migraine'], 'S08-16': ['bppv'], 'S08-17': ['bsg_ida'], 'S08-18': ['palp', 'af'], 'S08-19': ['cough'],
+ 'S08-20': ['zoster', 'rzv'],
 }
 _refs_for = refs_for
 
