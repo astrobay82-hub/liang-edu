@@ -95,30 +95,30 @@ add('acog_hmb', 'American College of Obstetricians and Gynecologists（ACOG）�
 add('nice_hmb', 'NICE guideline NG88: Heavy menstrual bleeding: assessment and management. 2018（現行版）.', url='https://www.nice.org.uk/guidance/ng88')
 add('dysmen', 'ACOG Committee Opinion No. 760: Dysmenorrhea and endometriosis in the adolescent. Obstet Gynecol. 2018;132(6):e249-e258.', 'ACOG Committee Opinion No. 760: Dysmenorrhea and Endometriosis in the Adolescent')
 add('nice_endo', 'NICE guideline NG73: Endometriosis: diagnosis and management. 2017（2024 更新）.', url='https://www.nice.org.uk/guidance/ng73')
-add('eshre_endo', 'Becker CM, et al. ESHRE guideline: endometriosis. Hum Reprod Open. 2022;2022(2):hoac009.', 'ESHRE guideline: endometriosis')
-add('pcos2023', 'Teede HJ, et al. Recommendations from the 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome. J Clin Endocrinol Metab. 2023;108(10):2447-2469.', 'Recommendations From the 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome')
-add('pcos_acu', 'Lim CED, et al. Acupuncture for polycystic ovarian syndrome. Cochrane Database Syst Rev（系統性回顧，最新版）.', 'Acupuncture for polycystic ovarian syndrome')
+add('eshre_endo', 'Becker CM, et al. ESHRE guideline: endometriosis. Hum Reprod Open. 2022;2022(2):hoac009.', url='https://pubmed.ncbi.nlm.nih.gov/35350465/')
+add('pcos2023', 'Teede HJ, et al. Recommendations from the 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome. J Clin Endocrinol Metab. 2023;108(10):2447-2469.', url='https://pubmed.ncbi.nlm.nih.gov/37580314/')
+add('pcos_acu', 'Zhang GS, Lim ECN, Cheng NCL, Lim CED. Acupuncture for polycystic ovary syndrome. Cochrane Database Syst Rev. 2025;10(10):CD007689.', url='https://pubmed.ncbi.nlm.nih.gov/41147529/')
 add('fibroid', 'ACOG Practice Bulletin No. 228: Management of symptomatic uterine leiomyomas. Obstet Gynecol. 2021;137(6):e100-e115.', 'Management of Symptomatic Uterine Leiomyomas: ACOG Practice Bulletin, Number 228')
-add('vagin', 'ACOG Practice Bulletin No. 215: Vaginitis in nonpregnant patients. Obstet Gynecol. 2020;135(1):e1-e17.', 'Vaginitis in Nonpregnant Patients: ACOG Practice Bulletin, Number 215')
+add('vagin', 'ACOG Practice Bulletin No. 215: Vaginitis in nonpregnant patients. Obstet Gynecol. 2020;135(1):e1-e17.', url='https://pubmed.ncbi.nlm.nih.gov/31856123/')
 add('sti', 'Workowski KA, et al. Sexually transmitted infections treatment guidelines, 2021. MMWR Recomm Rep. 2021;70(4):1-187.', 'Sexually Transmitted Infections Treatment Guidelines, 2021')
 add('rutiaua', 'Anger J, et al. Recurrent uncomplicated urinary tract infections in women: AUA/CUA/SUFU guideline. J Urol. 2019;202(2):282-289.', 'Recurrent Uncomplicated Urinary Tract Infections in Women: AUA/CUA/SUFU Guideline')
-add('cranberry', 'Williams G, et al. Cranberries for preventing urinary tract infections. Cochrane Database Syst Rev. 2023;11:CD001321.', 'Cranberries for preventing urinary tract infections')
+add('cranberry', 'Williams G, Stothart CI, Hahn D, et al. Cranberries for preventing urinary tract infections. Cochrane Database Syst Rev. 2023;11(11):CD001321.', 'Cranberries for preventing urinary tract infections')
 add('hpa_adult', '衛生福利部國民健康署：成人預防保健、孕前健康檢查與癌症篩檢（子宮頸癌、乳癌、大腸癌、胃幽門螺旋桿菌）資訊。', url='https://www.hpa.gov.tw/')
 add('who_cervix', 'World Health Organization. WHO guideline for screening and treatment of cervical pre-cancer lesions for cervical cancer prevention, 2nd ed. 2021.', url='https://www.who.int/')
 add('folic', 'US Preventive Services Task Force. Folic acid supplementation to prevent neural tube defects: USPSTF reaffirmation recommendation statement. JAMA. 2023;330(5):454-459.', 'Folic Acid Supplementation to Prevent Neural Tube Defects: US Preventive Services Task Force Reaffirmation Recommendation Statement')
-add('infert', 'Practice Committee of the American Society for Reproductive Medicine. Fertility evaluation of infertile women: a committee opinion. Fertil Steril. 2021;116(5):1255-1265.', 'Fertility evaluation of infertile women: a committee opinion')
-add('abm36', 'Mitchell KB, et al. Academy of Breastfeeding Medicine Clinical Protocol #36: The mastitis spectrum, revised 2022. Breastfeed Med. 2022;17(5):360-376.', 'Academy of Breastfeeding Medicine Clinical Protocol #36: The Mastitis Spectrum, Revised 2022')
+add('infert', 'Practice Committee of the American Society for Reproductive Medicine. Fertility evaluation of infertile women: a committee opinion. Fertil Steril. 2021;116(5):1255-1265.', url='https://pubmed.ncbi.nlm.nih.gov/34607703/')
+add('abm36', 'Mitchell KB, et al. Academy of Breastfeeding Medicine Clinical Protocol #36: The mastitis spectrum, revised 2022. Breastfeed Med. 2022;17(5):360-376.', url='https://pubmed.ncbi.nlm.nih.gov/35576513/')
 add('nice_meno', 'NICE guideline NG23: Menopause: identification and management. 2015（2024 更新）.', url='https://www.nice.org.uk/guidance/ng23')
 add('nams_ht', 'The 2022 hormone therapy position statement of The North American Menopause Society. Menopause. 2022;29(7):767-794.', 'The 2022 hormone therapy position statement of The North American Menopause Society')
-add('nams_gsm', 'The 2020 genitourinary syndrome of menopause position statement of The North American Menopause Society. Menopause. 2020;27(9):976-992.', 'The 2020 genitourinary syndrome of menopause position statement of The North American Menopause Society')
-add('acog_pmb', 'ACOG Committee Opinion No. 734: The role of transvaginal ultrasonography in evaluating the endometrium of women with postmenopausal bleeding. Obstet Gynecol. 2018;131(5):e124-e129.', 'ACOG Committee Opinion No. 734: The Role of Transvaginal Ultrasonography in Evaluating the Endometrium of Women With Postmenopausal Bleeding')
+add('nams_gsm', 'The 2020 genitourinary syndrome of menopause position statement of The North American Menopause Society. Menopause. 2020;27(9):976-992.', url='https://pubmed.ncbi.nlm.nih.gov/32852449/')
+add('acog_pmb', 'ACOG Committee Opinion No. 734: The role of transvaginal ultrasonography in evaluating the endometrium of women with postmenopausal bleeding. Obstet Gynecol. 2018;131(5):e124-e129.', url='https://pubmed.ncbi.nlm.nih.gov/29683909/')
 # ---- 成人內科（S08）----
 add('acg_gerd', 'Katz PO, et al. ACG clinical guideline for the diagnosis and management of gastroesophageal reflux disease. Am J Gastroenterol. 2022;117(1):27-56.', 'ACG Clinical Guideline for the Diagnosis and Management of Gastroesophageal Reflux Disease')
 add('dyspepsia', 'Moayyedi PM, et al. ACG and CAG clinical guideline: management of dyspepsia. Am J Gastroenterol. 2017;112(7):988-1013.', 'ACG and CAG Clinical Guideline: Management of Dyspepsia')
 add('maastricht', 'Malfertheiner P, et al. Management of Helicobacter pylori infection: the Maastricht VI/Florence consensus report. Gut. 2022;71(9):1724-1762.', 'Management of Helicobacter pylori infection: the Maastricht VI/Florence consensus report')
-add('hp_taipei', 'Liou JM, et al. Screening and eradication of Helicobacter pylori for gastric cancer prevention: the Taipei global consensus. Gut. 2020;69(12):2093-2112.', 'Screening and eradication of Helicobacter pylori for gastric cancer prevention: the Taipei global consensus')
+add('hp_taipei', 'Liou JM, et al. Screening and eradication of Helicobacter pylori for gastric cancer prevention: the Taipei global consensus. Gut. 2020;69(12):2093-2112.', url='https://pubmed.ncbi.nlm.nih.gov/33004546/')
 add('ibs', 'Lacy BE, et al. ACG clinical guideline: management of irritable bowel syndrome. Am J Gastroenterol. 2021;116(1):17-44.', 'ACG Clinical Guideline: Management of Irritable Bowel Syndrome')
-add('constip_adult', 'Chang L, et al. AGA-ACG clinical practice guideline: pharmacological management of chronic idiopathic constipation. Gastroenterology. 2023;164(7):1086-1106.', 'American Gastroenterological Association-American College of Gastroenterology Clinical Practice Guideline: Pharmacological Management of Chronic Idiopathic Constipation')
+add('constip_adult', 'Chang L, et al. AGA-ACG clinical practice guideline: pharmacological management of chronic idiopathic constipation. Gastroenterology. 2023;164(7):1086-1106.', url='https://pubmed.ncbi.nlm.nih.gov/37211380/')
 add('tw_htn', 'Wang TD, et al. 2022 Guidelines of the Taiwan Society of Cardiology and the Taiwan Hypertension Society for the management of hypertension. Acta Cardiol Sin. 2022;38(3):225-325.', '2022 Guidelines of the Taiwan Society of Cardiology and the Taiwan Hypertension Society for the Management of Hypertension')
 add('ada', 'American Diabetes Association. Standards of Care in Diabetes（每年更新）.', url='https://diabetes.org/')
 add('dpp', 'Knowler WC, et al. Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin. N Engl J Med. 2002;346(6):393-403.', 'Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin')
@@ -270,9 +270,9 @@ OVERRIDE = {
  'S06-19': ['emoreg', 'harvard'], 'S06-20': ['hpa'], 'S06-23': ['choking', 'aha2025', 'nfa'],
  'S07-01': ['acog_adol', 'acog_hmb'], 'S07-02': ['dysmen', 'nice_endo', 'eshre_endo'], 'S07-03': ['pmd'], 'S07-04': ['nice_hmb', 'acog_hmb'],
  'S07-05': ['pcos2023', 'pcos_acu'], 'S07-06': ['fibroid', 'acog_hmb'], 'S07-07': ['vagin', 'sti'], 'S07-08': ['rutiaua', 'cranberry'],
- 'S07-09': ['hpa_adult', 'who_cervix'], 'S07-10': ['folic', 'infert', 'hpa_adult'], 'S07-12': ['urti', 'honey', 'fda'], 'S07-13': ['icp'],
+ 'S07-09': ['who_cervix'], 'S07-10': ['folic', 'infert'], 'S07-12': ['urti', 'honey', 'fda'], 'S07-13': ['icp'],
  'S07-17': ['abm36'], 'S07-18': ['nice_meno', 'nams_ht'], 'S07-19': ['nams_gsm'], 'S07-20': ['acog_pmb'],
- 'S08-01': ['acg_gerd'], 'S08-02': ['dyspepsia', 'maastricht'], 'S08-03': ['maastricht', 'hp_taipei', 'hpa_adult'], 'S08-04': ['ibs'],
+ 'S08-01': ['acg_gerd'], 'S08-02': ['dyspepsia', 'maastricht'], 'S08-03': ['maastricht', 'hp_taipei'], 'S08-04': ['ibs'],
  'S08-05': ['constip_adult'], 'S08-06': ['tw_htn'], 'S08-07': ['ada', 'dpp'], 'S08-08': ['lipid'], 'S08-09': ['masld', 'easl_masld'],
  'S08-10': ['gout'], 'S08-11': ['hypothy', 'ata'], 'S08-12': ['hyperthy'], 'S08-13': ['osteo'], 'S08-14': ['acp_insomnia', 'aasm_cbti'],
  'S08-15': ['ichd3', 'acu_migraine'], 'S08-16': ['bppv'], 'S08-17': ['bsg_ida'], 'S08-18': ['palp', 'af'], 'S08-19': ['cough'],
